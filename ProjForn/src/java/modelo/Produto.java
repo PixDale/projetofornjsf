@@ -16,6 +16,9 @@ public class Produto {
     private double preco;
     private int moeda;
     private double imposto;
+    
+    
+    
 
     public int getCodigo() {
         return codigo;

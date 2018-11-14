@@ -20,9 +20,23 @@ import service.CategoriaService;
 public class CategoriaMB {
     private Categoria categoria = new Categoria();
     private CategoriaService servico = new CategoriaService();
+    private Categoria selectedCategoria;
+  
 
     public Categoria getCategoria() {
         return categoria;
+    }
+    public Categoria getSelectedCategoria(){
+        return selectedCategoria;
+    }
+    
+    public void setSelectedCategoria(Categoria selected){
+        selectedCategoria = selected;
+    }
+    
+    public void removeSelectedCategoria(){
+        servico.removerCategoria(selectedCategoria);
+        selectedCategoria = null;
     }
 
     public void setCategoria(Categoria categoria) {

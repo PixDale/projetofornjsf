@@ -24,9 +24,22 @@ import service.PedidoService;
 public class PedidoMB {
     private Pedido pedido = new Pedido();
     private PedidoService servico = new PedidoService();
+    private Pedido selectedPedido;
     
+    public void setSelectedPedido(Pedido p){
+        selectedPedido = p;
+    }
     
-      public Pedido getPedido() {
+    public Pedido getSelectedPedido(){
+        return selectedPedido;
+    }
+    
+    public void removeSelectedPedido(){
+        servico.removerPedido(selectedPedido);
+        selectedPedido = null;
+    }
+    
+    public Pedido getPedido() {
         return pedido;
     }
 

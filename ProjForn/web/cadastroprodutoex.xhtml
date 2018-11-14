@@ -23,44 +23,45 @@
 
             <p:panelGrid columns="8">
                 <p:outputLabel value="Código" />
-                <p:inputText value="" />
+                <p:inputText value="#{produtoMB.produtoex.codigo}" />
                 <p:outputLabel value="Nome" />
-                <p:inputText value=""/>
+                <p:inputText value="#{produtoMB.produtoex.nome}"/>
                 <p:outputLabel value="Categoria" />
                 <p:inputText value=""/>
                 <p:outputLabel value="Preço" />
-                <p:inputText value=""/>
+                <p:inputText value="#{produtoMB.produtoex.preco}"/>
                 <p:outputLabel value="Moeda" />
-                <p:inputText value=""/>
+                <p:inputText value="#{produtoMB.produtoex.moeda}"/>
                 <p:outputLabel value="Imposto" />
-                <p:inputText value=""/>
+                <p:inputText value="#{produtoMB.produtoex.imposto}"/>
                 <p:outputLabel value="Destino" />
-                <p:inputText value=""/>
+                <p:inputText value="#{produtoMB.produtoex.destino}"/>
                 
             </p:panelGrid>
 
             <br />
-            <p:commandButton value="Salvar" update=":formProdex" />
+            <p:commandButton value="Salvar" action="#{produtoMB.gerarProduto()}" update=":formProdex" />
+            
             <br /><br />
 
-            <p:dataTable var="comp" value="" resizableColumns="true">
+            <p:dataTable var="prodex" value="#{produtoMB.produtos}" resizableColumns="true">
                 <p:column headerText="Código">
-                    <h:outputText value="" />
+                    <h:outputText value="#{prodex.codigo}"/>
                 </p:column>
                 <p:column headerText="Nome">
-                    <h:outputText value="" />
+                    <h:outputText value="#{prodex.nome}" />
                 </p:column>
                 <p:column headerText="Categoria">
-                    <h:outputText value="" />
+                    <h:outputText value="#{prodex.categoria}" />
                 </p:column>
                 <p:column headerText="Preço">
-                    <h:outputText value="" />
+                    <h:outputText value="#{prodex.preco}" />
                 </p:column>
                 <p:column headerText="Moeda">
-                    <h:outputText value="" />
+                    <h:outputText value="#{prodex.moeda}" />
                 </p:column>
                 <p:column headerText="Imposto">
-                    <h:outputText value="" />
+                    <h:outputText value="#{prodex.imposto}" />
                 </p:column>
 
             </p:dataTable>

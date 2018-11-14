@@ -24,7 +24,20 @@ import service.ClienteService;
 public class ClienteMB {
     private Cliente cliente = new Cliente();
     private ClienteService servico = new ClienteService();
+    private Cliente selectedCliente;
 
+    public void setSelectedCliente(Cliente c){
+        selectedCliente = c;
+    }
+    
+    public Cliente getSelectedCliente(){
+        return selectedCliente;
+    }
+    public void removeSelectedCliente(){
+        servico.removerCliente(selectedCliente);
+    }
+    
+    
     public Cliente getCliente() {
         return cliente;
     }

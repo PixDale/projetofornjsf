@@ -4,22 +4,21 @@
                 xmlns:p="http://primefaces.org/ui">
 	<h:form>
 	<p:menubar>
-                <p:submenu label="Home" >
-                    <p:menuitem value="Home" action="index.xhtml?faces-redirect=true"></p:menuitem>
-		</p:submenu>
+                
+                <p:menuitem value="Home" action="index.xhtml?faces-redirect=true"></p:menuitem>
+		
 		<p:submenu label="Cadastro">
 			<p:menuitem value="Clientes" action="cadastrocliente.xhtml?faces-redirect=true" />
 			<p:separator/>
-			<p:menuitem value="Produtos" action="cadastroproduto.xhtml?faces-redirect=true"></p:menuitem>
+			<p:submenu label="Produtos">
+                            <p:menuitem value="Produto de Exportação" action="cadastroprodutoex.xhtml?faces-redirect=true" />
+                            <p:menuitem value="Produto de Mercado Interno" action="cadastroprodutomi.xhtml?faces-redirect=true" />
+                        </p:submenu>
                         <p:separator/>
                         <p:menuitem value="Pedidos" action="cadastropedido.xhtml?faces-redirect=true"></p:menuitem>
+                        <p:menuitem value="Categorias" action="cadastrocategoria.xhtml?faces-redirect=true"></p:menuitem>
 		</p:submenu>
-		<p:submenu label="Help">
-			<p:menuitem value="About JournalDev"></p:menuitem>
-			<p:menuitem value="Contact Us"></p:menuitem>
-			<p:separator/>
-			<p:menuitem value="Help"></p:menuitem>
-		</p:submenu>
+		
 	</p:menubar>
 </h:form>
 </ui:composition>

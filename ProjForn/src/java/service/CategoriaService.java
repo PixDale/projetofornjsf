@@ -16,7 +16,18 @@ public class CategoriaService {
     private static ArrayList<Categoria> listaCategorias = new ArrayList<Categoria>();
     
     public void salvarCategoria(Categoria c){
+       if(listaCategorias.size() > 0){ 
+        for (Categoria cat: listaCategorias){
+            if (cat.getDescricao().equals(c.getDescricao())){
+                System.out.println("ENTROU NO IF");
+                return;
+            }
+        }
+           System.out.println("SAIU DO FOR");
         listaCategorias.add(c);
+    } else
+           listaCategorias.add(c);
+           
     }
 
     public ArrayList<Categoria> getCategorias() {

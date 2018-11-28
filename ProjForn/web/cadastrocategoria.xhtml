@@ -19,22 +19,22 @@
             Moeda
             Imposto
         -->
-        <h:form id="formProdmi">
+        <h:form id="formCat">
 
             <p:panelGrid columns="8">
                 <p:outputLabel value="Categoria" />
-                <p:inputText value="" />
+                <p:inputText value="#{categoriaMB.categoria.descricao}" />
                 
                 
             </p:panelGrid>
 
             <br />
-            <p:commandButton value="Salvar" update=":formProdmi" />
+            <p:commandButton value="Salvar" action="#{categoriaMB.salvarCategoria()}" update=":formCat" />
             <br /><br />
 
-            <p:dataTable var="comp" value="" resizableColumns="true">
+            <p:dataTable var="cats" value="#{categoriaMB.categorias}" resizableColumns="true">
                 <p:column headerText="Categorias">
-                    <h:outputText value="" />
+                    <h:outputText value="#{cats.descricao}" />
                 </p:column>
                 
 

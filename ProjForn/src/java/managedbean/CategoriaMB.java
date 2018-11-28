@@ -44,8 +44,10 @@ public class CategoriaMB {
     }
     
     public void salvarCategoria(){
-        servico.salvarCategoria(categoria);
-        categoria = new Categoria();
+        if(!categoria.getDescricao().equals("")){
+            servico.salvarCategoria(categoria);
+            categoria = new Categoria();
+        }
     }
     
     public void removerCategoria(Categoria categoria){

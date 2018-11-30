@@ -6,11 +6,14 @@
 package managedbean;
 
 import java.util.ArrayList;
+import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import modelo.Categoria;
 import modelo.Produto;
 import modelo.ProdutoExportacao;
 import modelo.ProdutoMercadoInterno;
+import service.CategoriaService;
 import service.ProdutoService;
 
 /**
@@ -27,7 +30,20 @@ public class ProdutoMB {
     private Produto selectedProduto;
     private ProdutoExportacao produtoex = new ProdutoExportacao();
     private ProdutoMercadoInterno produtomi = new ProdutoMercadoInterno();
+    private Categoria categoriaEscolhida;
+    private CategoriaService categoriaService = new CategoriaService();
+
+    public Categoria getCategoriaEscolhida() {
+        return categoriaEscolhida;
+    }
+
+    public void setCategoriaEscolhida(Categoria categoriaEscolhida) {
+        this.categoriaEscolhida = categoriaEscolhida;
+    }
     
+    public List<Categoria> getCategorias(){
+      return categoriaService.getCategorias();
+    }
     
     private void removeSelectedProduto(){
         servico.removerProduto(selectedProduto);

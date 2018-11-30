@@ -6,6 +6,7 @@
 package managedbean;
 
 import java.util.ArrayList;
+import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import modelo.Categoria;
@@ -21,8 +22,10 @@ public class CategoriaMB {
     private Categoria categoria = new Categoria();
     private CategoriaService servico = new CategoriaService();
     private Categoria selectedCategoria;
+   
   
 
+        
     public Categoria getCategoria() {
         return categoria;
     }
@@ -54,7 +57,7 @@ public class CategoriaMB {
         servico.removerCategoria(categoria);
     }
     
-    public ArrayList<Categoria> getCategorias(){
+    public List<Categoria> getCategorias(){
         return servico.getCategorias();
     }
 }

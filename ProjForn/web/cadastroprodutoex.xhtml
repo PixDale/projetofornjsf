@@ -28,9 +28,9 @@
                 <p:outputLabel value="Nome" />
                 <p:inputText value="#{produtoMB.produtoex.nome}"/>
                 <p:outputLabel value="Categoria" />
-                <p:selectOneMenu value="#{funcionarioMB.empresaEscolhida}" converter="converterEmpresa" style="width:100%">
-                    <f:selectItems value="#{funcionarioMB.empresas}" var="aux"
-                                   itemValue="#{aux}" itemLabel="#{aux.nome}" />
+                <p:selectOneMenu value="#{produtoMB.categoriaEscolhida}" converter="converterCategoria" style="width:100%">
+                    <f:selectItems value="#{produtoMB.categorias}" var="aux"
+                                   itemValue="#{aux}" itemLabel="#{aux.descricao}" />
                 </p:selectOneMenu>
                 <p:outputLabel value="Preço" />
                 <p:inputText value="#{produtoMB.produtoex.preco}"/>
@@ -48,15 +48,29 @@
             
             <br /><br />
 
-            <p:dataTable var="prodex" value="#{produtoMB.getProdutos(1)}" resizableColumns="true">
-                <p:column headerText="Código">
+            <p:dataTable var="prodex" value="#{produtoMB.getProdutos(1)}"
+                         id = "dataProdutos"
+                         rows="10"
+                         paginator="true"
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15"
+                         editable="true"
+                         selection="#{produtoMB.selectedProduto}"
+                         selectionMode="single"
+                         rowKey="#{prodex.codigo}"
+                         resizableColumns="true">
+                
+                <p:column headerText="Código" filterBy="#{prodex.codigo}" 
+                          filterMatchMode="contains">
                     <h:outputText value="#{prodex.codigo}"/>
                 </p:column>
-                <p:column headerText="Nome">
+                <p:column headerText="Nome" filterBy="#{prodex.nome}" 
+                          filterMatchMode="contains">
                     <h:outputText value="#{prodex.nome}" />
                 </p:column>
-                <p:column headerText="Categoria">
-                    <h:outputText value="#{prodex.categoria}" />
+                <p:column headerText="Categoria" filterBy="#{prodex.categoria.descricao}" 
+                          filterMatchMode="contains">
+                    <h:outputText value="#{prodex.categoria.descricao}" />
                 </p:column>
                 <p:column headerText="Preço">
                     <h:outputText value="#{prodex.preco}" />
@@ -72,6 +86,13 @@
                 </p:column>
 
             </p:dataTable>
+            
+            <p:contextMenu for="dataProdutos">
+                <p:menuitem value="Remove" 
+                            update="dataProdutos" 
+                            icon="ui-icon-close" 
+                            actionListener="#{produtoMB.removeSelectedProduto}"/>
+            </p:contextMenu>
         </h:form>
 	</ui:define>
 </ui:composition>

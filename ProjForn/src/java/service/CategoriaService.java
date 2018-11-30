@@ -6,6 +6,7 @@
 package service;
 
 import java.util.ArrayList;
+import java.util.List;
 import modelo.Categoria;
 
 /**
@@ -30,12 +31,22 @@ public class CategoriaService {
            
     }
 
-    public ArrayList<Categoria> getCategorias() {
+    public List<Categoria> getCategorias() {
         return listaCategorias;
     }
     
     public void removerCategoria(Categoria c){
         listaCategorias.remove(c);
+    }
+
+    public Categoria getCategoriaByNome(String value) {
+        for(Categoria e: listaCategorias){
+           if(e.getDescricao().equals(value))
+               return e;
+        
+        }
+        
+        return null;
     }
     
 }

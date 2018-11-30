@@ -2,7 +2,8 @@
                xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:p="http://primefaces.org/ui">
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
                 
         <ui:define name="title">
 		<h:outputText value="Cadastro de Produtos" />
@@ -27,7 +28,10 @@
                 <p:outputLabel value="Nome" />
                 <p:inputText value="#{produtoMB.produtoex.nome}"/>
                 <p:outputLabel value="Categoria" />
-                <p:inputText value=""/>
+                <p:selectOneMenu value="#{funcionarioMB.empresaEscolhida}" converter="converterEmpresa" style="width:100%">
+                    <f:selectItems value="#{funcionarioMB.empresas}" var="aux"
+                                   itemValue="#{aux}" itemLabel="#{aux.nome}" />
+                </p:selectOneMenu>
                 <p:outputLabel value="Preço" />
                 <p:inputText value="#{produtoMB.produtoex.preco}"/>
                 <p:outputLabel value="Moeda" />
@@ -40,11 +44,11 @@
             </p:panelGrid>
 
             <br />
-            <p:commandButton value="Salvar" action="#{produtoMB.gerarProduto()}" update=":formProdex" />
+            <p:commandButton value="Salvar" action="#{produtoMB.salvarProduto()}" update=":formProdex" />
             
             <br /><br />
 
-            <p:dataTable var="prodex" value="#{produtoMB.produtos}" resizableColumns="true">
+            <p:dataTable var="prodex" value="#{produtoMB.getProdutos(1)}" resizableColumns="true">
                 <p:column headerText="Código">
                     <h:outputText value="#{prodex.codigo}"/>
                 </p:column>
@@ -62,6 +66,9 @@
                 </p:column>
                 <p:column headerText="Imposto">
                     <h:outputText value="#{prodex.imposto}" />
+                </p:column>
+                <p:column headerText="Destino">
+                    <h:outputText value="#{prodex.destino}" />
                 </p:column>
 
             </p:dataTable>

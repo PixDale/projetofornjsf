@@ -6,7 +6,10 @@
 package service;
 
 import java.util.ArrayList;
+import java.util.List;
 import modelo.Produto;
+import modelo.ProdutoExportacao;
+import modelo.ProdutoMercadoInterno;
 
 /**
  *
@@ -19,7 +22,24 @@ public class ProdutoService {
         listaProduto.add(c);
     }
     
-    public ArrayList<Produto> getProdutos(){
+    public ArrayList getProdutos(int tipo){
+        if (tipo == 1) {
+            ArrayList<ProdutoExportacao> listaux = new ArrayList();
+            for (Produto p : listaProduto) {
+                if(p instanceof ProdutoExportacao) {
+                    listaux.add((ProdutoExportacao) p);
+                }
+            }
+            return listaux;
+        } else if (tipo == 2) {
+            ArrayList<ProdutoMercadoInterno> listaux = new ArrayList();
+            for (Produto p : listaProduto) {
+                if(p instanceof ProdutoMercadoInterno) {
+                    listaux.add((ProdutoMercadoInterno) p);
+                }
+            }
+            return listaux;
+        }
         return listaProduto;
     }
     

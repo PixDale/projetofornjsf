@@ -81,8 +81,8 @@ public class ProdutoMB {
     public void setProdutomi(ProdutoMercadoInterno produtomi) {
         this.produtomi = produtomi;
     }
-    public ArrayList<Produto> getProdutos(){
-        return servico.getProdutos();
+    public ArrayList<Produto> getProdutos(int tipo){
+        return servico.getProdutos(tipo);
     }
 
     

@@ -8,6 +8,7 @@
 package managedbean;
 
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +32,7 @@ import service.ProdutoService;
 @ManagedBean
 @SessionScoped
 
-public class PedidoMB {
+public class PedidoMB implements Serializable{
     private Pedido pedido = new Pedido();
     private PedidoService servico = new PedidoService();
     private ClienteService servicocli = new ClienteService();
@@ -102,11 +103,13 @@ public class PedidoMB {
         return servico.getPedidos();
     }
     public void inserirProduto(){
+        System.out.println("-----------------------------------------------------------------------------------------------------------------");
+        System.out.println(itempedido.getNumeropedido()+" - "+itempedido.getQuantidade()+" - "+itempedido.getProduto().getNome());
         if(!servico.inserirProduto(itempedido)){
             //mostrar mensagem de erro
         }
         itempedido = new ItemPedido();
-        System.out.println(servico.getPedidos());
+        System.out.println(servico.getPedidos().get(0));
     }
 
     public ItemPedido getItempedido() {

@@ -5,6 +5,7 @@
  */
 package managedbean;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
@@ -24,7 +25,7 @@ import service.ProdutoService;
 @ManagedBean
 @SessionScoped
 
-public class ProdutoMB {
+public class ProdutoMB implements Serializable{
 
     private ProdutoService servico = new ProdutoService();
     private Produto selectedProduto;

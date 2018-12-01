@@ -16,8 +16,11 @@ import java.util.List;
 public class Pedido {
     private int numero;
     private Date data;
-    private ArrayList<ItemPedido> itens;
+    private List<ItemPedido> itens = new ArrayList<>();
     private Cliente cliente;
+    
+    
+   
 
     public int getNumero() {
         return numero;
@@ -39,8 +42,15 @@ public class Pedido {
         return itens;
     }
 
+    /*public void addItens(ItemPedido item) {
+        System.out.println("ENTROU NO ADDITENS DO MODELO");
+        System.out.println(item.getNumeropedido()+" - "+item.getQuantidade()+" - "+item.getProduto().getNome());
+        itens.add(item);
+        System.out.println("ADICIONOU O ITEMPEDIDO [MODELO]");
+    }*/
     public void addItens(ItemPedido item) {
         itens.add(item);
+        
     }
 
     public Cliente getCliente() {
@@ -49,6 +59,10 @@ public class Pedido {
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
+    }
+
+    public void setItens(List<ItemPedido> itens) {
+        this.itens = itens;
     }
     
     

@@ -5,6 +5,7 @@
  */
 package managedbean;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
@@ -18,7 +19,7 @@ import service.CategoriaService;
  */
 @ManagedBean
 @SessionScoped
-public class CategoriaMB {
+public class CategoriaMB implements Serializable{
     private Categoria categoria = new Categoria();
     private CategoriaService servico = new CategoriaService();
     private Categoria selectedCategoria;

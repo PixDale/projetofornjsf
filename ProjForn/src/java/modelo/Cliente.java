@@ -8,7 +8,7 @@ public class Cliente {
     private String telefone;
     private int status;
     private double limite;
-    private ArrayList<Pedido> pedidos;
+    private ArrayList<Pedido> pedidos = new ArrayList();
 
     public int getCodigo() {
         return codigo;

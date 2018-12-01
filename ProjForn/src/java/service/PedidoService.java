@@ -30,9 +30,15 @@ public class PedidoService {
         listaPedido.remove(c);
     }
     public Boolean inserirProduto (ItemPedido ip) {
+        System.out.println("ENTROU NO INSERIR DO SERVICE");
+        System.out.println(ip.getNumeropedido()+" - "+ip.getQuantidade()+" - "+ip.getProduto().getNome());
        for (Pedido p : listaPedido) {
+           
            if(ip.getNumeropedido() == p.getNumero()) {
+               System.out.println("ACHOU O PRODUTO INFORMADO");
                p.addItens(ip);
+               System.out.println("COLOCOU O ITEMPRODUTO NA LISTA");
+               
                return true;
            }
        }

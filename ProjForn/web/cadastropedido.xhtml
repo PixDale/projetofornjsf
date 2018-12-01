@@ -22,47 +22,38 @@
             <p:panelGrid columns="6">
                 <p:outputLabel value="Número" />
                 <p:inputText value="#{pedidoMB.pedido.numero}" />
-                <p:outputLabel value="Data" />
-                <p:inputText value="#{pedidoMB.pedido.data}"/>
+                
+                <p:outputLabel for="event" value="Data:" />
+                <p:calendar id="event" value="#{pedidoMB.pedido.data}">
+                    <p:ajax event="dateSelect" listener="#{pedidoMB.onDateSelect}"/>
+                </p:calendar>
                 <p:outputLabel value="Cliente" for="autoCliente"/>
                 <p:autoComplete id="autoCliente"
                                 forceSelection="true"
                                 value="#{pedidoMB.pedido.cliente}"                                
-                                completeMethod="#{clienteMB.clientes}"
+                                completeMethod="#{pedidoMB.completeCliente}"
                                 var="aux"
                                 itemValue="#{aux}"
                                 itemLabel="#{aux.nome}"
                                 converter="converterCliente"/>
                                 
             </p:panelGrid>
-             <p:commandButton value="Salvar" update=":formCliente" />
+            <p:commandButton value="Salvar" action="#{pedidoMB.salvarPedido()}" update=":formCliente" />
             <br/>
-            <h3>Inserção de Produtos</h3>
-            <p:panelGrid columns="6">
-                <p:outputLabel value="Número do pedido" />
-                <p:inputText value="" />
-                <p:outputLabel value="Produto" />
-                <p:inputText value=""/>
-                <p:outputLabel value="Quantidade" />
-                <p:inputText value=""/>
-                                
-            </p:panelGrid>
+            
 
-            <p:commandButton value="Inserir" update=":formCliente" />
-            <br /><br />
-
-            <p:dataTable var="comp" value="" resizableColumns="true">
+            <p:dataTable var="comp" value="#{pedidoMB.pedidos}" resizableColumns="true">
                 <p:column headerText="Número">
-                    <h:outputText value="" />
+                    <h:outputText value="#{comp.numero}" />
                 </p:column>
                 <p:column headerText="Data">
-                    <h:outputText value="" />
+                    <h:outputText value="#{comp.data}" />
                 </p:column>
                 <p:column headerText="Itens">
-                    <h:outputText value="" />
+                    <h:outputText value="#{comp.itens}" />
                 </p:column>
                 <p:column headerText="Cliente">
-                    <h:outputText value="" />
+                    <h:outputText value="#{comp.cliente.nome}" />
                 </p:column>
                 
             </p:dataTable>

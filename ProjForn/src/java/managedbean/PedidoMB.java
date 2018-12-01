@@ -8,10 +8,17 @@
 package managedbean;
 
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import modelo.Cliente;
 import modelo.Pedido;
+import org.primefaces.event.SelectEvent;
+import service.ClienteService;
 import service.PedidoService;
 
 /**
@@ -24,6 +31,7 @@ import service.PedidoService;
 public class PedidoMB {
     private Pedido pedido = new Pedido();
     private PedidoService servico = new PedidoService();
+    private ClienteService servicocli = new ClienteService();
     private Pedido selectedPedido;
     
     public void setSelectedPedido(Pedido p){
@@ -47,10 +55,38 @@ public class PedidoMB {
         this.pedido = pedido;
     }
     
+    public void onDateSelect(SelectEvent event) {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", format.format(event.getObject())));
+    }
+    
+      public List<Cliente> completeCliente(String query) {
+        List<Cliente> allClientes = servicocli.getClientes();
+        List<Cliente> filteredClientes = new ArrayList<Cliente>();
+         
+        for (int i = 0; i < allClientes.size(); i++) {
+            Cliente skin = allClientes.get(i);
+            if(skin.getNome().toLowerCase().contains(query)) {
+                filteredClientes.add(skin);
+            }
+        }
+         
+        return filteredClientes;
+    }
     
     public void salvarPedido(){
-        servico.salvarPedido(pedido);
-        pedido = new Pedido();
+        try{
+        if(servicocli.checkClientes(pedido.getCliente())){
+            servico.salvarPedido(pedido);
+            pedido = new Pedido();
+        }
+        
+        }
+        catch(NullPointerException e){
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,"Error! Cliente necessario", null);
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        }
     }
     
     public void removerPedido(Pedido pedido){
@@ -60,4 +96,5 @@ public class PedidoMB {
     public ArrayList<Pedido> getPedidos(){
         return servico.getPedidos();
     }
+
 }

@@ -9,7 +9,7 @@ package modelo;
  *
  * @author 171711
  */
-public class Produto {
+public abstract class Produto {
     private int codigo;
     private String nome;
     private Categoria categoria;

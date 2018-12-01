@@ -60,5 +60,7 @@ public class ClienteMB {
     public List<Cliente> getClientes(){
         return servico.getClientes();
     }
+    
+  
 
 }

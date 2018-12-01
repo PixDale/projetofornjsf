@@ -36,4 +36,13 @@ public class ClienteService {
         return null;
     }
     
+    public boolean checkClientes(Cliente cod){
+        for (Cliente c : listaCliente){
+            if(c.getCodigo() == cod.getCodigo()){
+                return true;
+            }
+        }
+        return false;
+    }
+    
 }

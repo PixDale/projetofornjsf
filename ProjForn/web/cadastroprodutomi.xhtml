@@ -2,6 +2,7 @@
                xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:p="http://primefaces.org/ui">
                 
         <ui:define name="title">
@@ -9,7 +10,7 @@
 	</ui:define>
 
 	<ui:define name="principal">
-        <h1>Cadastro de Produto</h1>
+        <h1>Cadastro de Produtos de Mercado Interno</h1>
         
         <!--
             Código
@@ -23,44 +24,50 @@
 
             <p:panelGrid columns="8">
                 <p:outputLabel value="Código" />
-                <p:inputText value="" />
+                <p:inputText value="#{produtoMB.produtomi.codigo}" />
                 <p:outputLabel value="Nome" />
-                <p:inputText value=""/>
+                <p:inputText value="#{produtoMB.produtomi.nome}"/>
                 <p:outputLabel value="Categoria" />
-                <p:inputText value=""/>
+                <p:selectOneMenu value="#{produtoMB.categoriaEscolhida}" converter="converterCategoria" style="width:100%">
+                   <f:selectItems value="#{produtoMB.categorias}" var="aux"
+                                   itemValue="#{aux}" itemLabel="#{aux.descricao}" />
+                </p:selectOneMenu>
                 <p:outputLabel value="Preço" />
-                <p:inputText value=""/>
+                <p:inputText value="#{produtoMB.produtomi.preco}"/>
                 <p:outputLabel value="Moeda" />
-                <p:inputText value=""/>
+                <p:inputText value="#{produtoMB.produtomi.moeda}"/>
                 <p:outputLabel value="Imposto" />
-                <p:inputText value=""/>
+                <p:inputText value="#{produtoMB.produtomi.imposto}"/>
                 <p:outputLabel value="Incentivo" />
-                <p:selectBooleanCheckbox value="" />
+                <p:selectBooleanCheckbox value="#{produtoMB.produtomi.incentivo}" />
                 
             </p:panelGrid>
 
             <br />
-            <p:commandButton value="Salvar" update=":formProdmi" />
+            <p:commandButton value="Salvar" action="#{produtoMB.salvarProduto()}" update=":formProdmi" />
             <br /><br />
 
-            <p:dataTable var="comp" value="" resizableColumns="true">
+            <p:dataTable var="comp" value="#{produtoMB.getProdutos(2)}" 
+                       
+                         resizableColumns="true">
+                
                 <p:column headerText="Código">
-                    <h:outputText value="" />
+                    <h:outputText value="#{comp.codigo}" />
                 </p:column>
                 <p:column headerText="Nome">
-                    <h:outputText value="" />
+                    <h:outputText value="#{comp.nome}" />
                 </p:column>
                 <p:column headerText="Categoria">
-                    <h:outputText value="" />
+                    <h:outputText value="#{comp.categoria.descricao}" />
                 </p:column>
                 <p:column headerText="Preço">
-                    <h:outputText value="" />
+                    <h:outputText value="#{comp.preco}" />
                 </p:column>
                 <p:column headerText="Moeda">
-                    <h:outputText value="" />
+                    <h:outputText value="#{comp.moeda}" />
                 </p:column>
                 <p:column headerText="Imposto">
-                    <h:outputText value="" />
+                    <h:outputText value="#{comp.imposto}" />
                 </p:column>
 
             </p:dataTable>

@@ -59,11 +59,15 @@ public class ProdutoMB {
     }
     
     public void salvarProduto(){
-        System.out.println("ola");
-        if(produtoex.getDestino().equals(null)){
+        
+        if(produtoex.getDestino()==null){
+            
+            produtomi.setCategoria(categoriaEscolhida);
             servico.salvarProduto(produtomi);
             produtomi = new ProdutoMercadoInterno();
         } else {
+           
+            produtoex.setCategoria(categoriaEscolhida);
             servico.salvarProduto(produtoex);
             produtoex = new ProdutoExportacao();
         }

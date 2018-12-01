@@ -10,7 +10,7 @@
 	</ui:define>
 
 	<ui:define name="principal">
-        <h1>Cadastro de Produto de Exportação</h1>
+        <h1>Cadastro de Produtos de Exportação</h1>
         
         <!--
             Código
@@ -68,9 +68,8 @@
                           filterMatchMode="contains">
                     <h:outputText value="#{prodex.nome}" />
                 </p:column>
-                <p:column headerText="Categoria" filterBy="#{prodex.categoria.descricao}" 
-                          filterMatchMode="contains">
-                    <h:outputText value="#{prodex.categoria.descricao}" />
+                <p:column headerText="Categoria">
+                    <h:outputText value="#{prodex.categoria.getDescricao()}" />
                 </p:column>
                 <p:column headerText="Preço">
                     <h:outputText value="#{prodex.preco}" />

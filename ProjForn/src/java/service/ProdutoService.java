@@ -19,7 +19,9 @@ public class ProdutoService {
     private static ArrayList<Produto> listaProduto = new ArrayList<Produto>();
     
     public void salvarProduto(Produto c){
+        
         listaProduto.add(c);
+        
     }
     
     public ArrayList getProdutos(int tipo){

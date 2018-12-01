@@ -16,10 +16,13 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import modelo.Cliente;
+import modelo.ItemPedido;
 import modelo.Pedido;
+import modelo.Produto;
 import org.primefaces.event.SelectEvent;
 import service.ClienteService;
 import service.PedidoService;
+import service.ProdutoService;
 
 /**
  *
@@ -33,6 +36,8 @@ public class PedidoMB {
     private PedidoService servico = new PedidoService();
     private ClienteService servicocli = new ClienteService();
     private Pedido selectedPedido;
+    private ItemPedido itempedido = new ItemPedido();
+    private ProdutoService servicopro = new ProdutoService();
     
     public void setSelectedPedido(Pedido p){
         selectedPedido = p;
@@ -96,5 +101,37 @@ public class PedidoMB {
     public ArrayList<Pedido> getPedidos(){
         return servico.getPedidos();
     }
+    public void inserirProduto(){
+        if(!servico.inserirProduto(itempedido)){
+            //mostrar mensagem de erro
+        }
+        itempedido = new ItemPedido();
+        System.out.println(servico.getPedidos());
+    }
+
+    public ItemPedido getItempedido() {
+        return itempedido;
+    }
+
+    public void setItempedido(ItemPedido itempedido) {
+        this.itempedido = itempedido;
+    }
+    public void setItempedidoNumero(int numero) {
+        itempedido.setNumeropedido(numero);
+    }
+    public List<Produto> completeProduto(String query) {
+        List<Produto> allProdutos = servicopro.getProdutos(0);
+        List<Produto> filteredProdutos = new ArrayList<Produto>();
+
+        for (int i = 0; i < allProdutos.size(); i++) {
+            Produto skin = allProdutos.get(i);
+            if(skin.getNome().toLowerCase().contains(query)) {
+                filteredProdutos.add(skin);
+            }
+        }
+
+        return filteredProdutos;
+    }
+    
 
 }

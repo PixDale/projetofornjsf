@@ -48,4 +48,12 @@ public class ProdutoService {
     public void removerProduto(Produto c){
         listaProduto.remove(c);
     }
+    public Produto getProdutoByNome(String str) {
+        for (Produto c : listaProduto) {
+            if(c.getNome().equals(str)) {
+                return c;
+            }
+        }
+        return null;
+    }
 }

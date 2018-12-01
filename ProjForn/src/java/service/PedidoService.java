@@ -6,6 +6,7 @@
 package service;
 
 import java.util.ArrayList;
+import java.util.List;
 import modelo.ItemPedido;
 import modelo.Pedido;
 
@@ -28,9 +29,16 @@ public class PedidoService {
     public void removerPedido(Pedido c){
         listaPedido.remove(c);
     }
-    public void inserirProduto (ItemPedido ip) {
-       
+    public Boolean inserirProduto (ItemPedido ip) {
+       for (Pedido p : listaPedido) {
+           if(ip.getNumeropedido() == p.getNumero()) {
+               p.addItens(ip);
+               return true;
+           }
+       }
+       return false;
     }
+    
     public int getIndexByCod(int cod){
         for (int i=0; i<listaPedido.size(); i++){
             if(listaPedido.get(i).getNumero() == cod){
@@ -39,5 +47,6 @@ public class PedidoService {
         }
         return -1;
     }
+    
     
 }

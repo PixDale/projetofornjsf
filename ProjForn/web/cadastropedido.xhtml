@@ -40,6 +40,26 @@
             </p:panelGrid>
             <p:commandButton value="Salvar" action="#{pedidoMB.salvarPedido()}" update=":formCliente" />
             <br/>
+            <h3>Inserção de Produtos</h3>
+            <p:panelGrid columns="6">
+                <p:outputLabel value="Número do pedido" />
+                <p:inputText value="#{pedidoMB.itempedido.numeropedido}" />
+                <p:outputLabel value="Produto"/>
+                <p:autoComplete id="autoProduto"
+                                forceSelection="true"
+                                value="#{pedidoMB.itempedido.produto}"
+                                completeMethod="#{pedidoMB.completeProduto}"
+                                var="aux"
+                                itemValue="#{aux}"
+                                itemLabel="#{aux.nome}"
+                                converter="converterProduto"/>
+                <p:outputLabel value="Quantidade" />
+                <p:inputText value="#{pedidoMB.itempedido.quantidade}"/>
+                                
+            </p:panelGrid>
+
+            <p:commandButton value="Inserir" action="#{pedidoMB.inserirProduto}" update=":formCliente" />
+            <br /><br />
             
 
             <p:dataTable var="comp" value="#{pedidoMB.pedidos}" resizableColumns="true">
@@ -50,7 +70,7 @@
                     <h:outputText value="#{comp.data}" />
                 </p:column>
                 <p:column headerText="Itens">
-                    <h:outputText value="#{comp.itens}" />
+                    <h:outputText  />
                 </p:column>
                 <p:column headerText="Cliente">
                     <h:outputText value="#{comp.cliente.nome}" />

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+     
+    <h:head>
+<title>Itens</title>
+<style type="text/css">
+    .ui-widget {
+        font-size: 90%;
+    }
+</style>
+    </h:head>
+     
+    <h:body>
+<i id="customheader" class="pi pi-home" style="display:none"></i>
+ 
+<p:dataTable var="item" value="#{produtoMB.cars}">
+    <p:column headerText="Id">
+        <h:outputText value="#{car.id}" />
+    </p:column>
+ 
+    <p:column headerText="Year">
+        <h:outputText value="#{car.year}" />
+    </p:column>
+ 
+    <p:column headerText="Brand">
+        <h:outputText value="#{car.brand}" />
+    </p:column>
+ 
+    <p:column headerText="Color">
+        <h:outputText value="#{car.color}" />
+    </p:column>
+</p:dataTable>
+    </h:body>
+     
+</html>

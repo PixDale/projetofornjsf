@@ -1,6 +1,7 @@
 package modelo;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -13,16 +14,16 @@ import java.util.Date;
  * @author 171711
  */
 public class Pedido {
-    private long numero;
+    private int numero;
     private Date data;
     private ArrayList<ItemPedido> itens;
     private Cliente cliente;
 
-    public long getNumero() {
+    public int getNumero() {
         return numero;
     }
 
-    public void setNumero(long numero) {
+    public void setNumero(int numero) {
         this.numero = numero;
     }
 
@@ -34,12 +35,12 @@ public class Pedido {
         this.data = data;
     }
 
-    public ArrayList<ItemPedido> getItens() {
+    public List<ItemPedido> getItens() {
         return itens;
     }
 
-    public void setItens(ArrayList<ItemPedido> itens) {
-        this.itens = itens;
+    public void addItens(ItemPedido item) {
+        itens.add(item);
     }
 
     public Cliente getCliente() {

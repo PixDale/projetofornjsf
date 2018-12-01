@@ -16,25 +16,16 @@ import javax.faces.convert.FacesConverter;
 import modelo.Categoria;
 import service.CategoriaService;
 
-
-
-
-
 @FacesConverter("converterCategoria")
 public class ConverterCategoria implements Converter {
-
 	private CategoriaService servico = new CategoriaService();
 	
 	@Override
 	public Object getAsObject(FacesContext fc, UIComponent uic, String value) {
-		
-		Categoria e=null;
+		Categoria e = null;
 		if(value != null && !value.equals("")) {
 			e = servico.getCategoriaByNome(value);	
 		}
-		
-		
-		
 		return e;
 	}
 
@@ -45,8 +36,6 @@ public class ConverterCategoria implements Converter {
 			return null;
 		} else {
 			return ((Categoria) categoria).getDescricao();
-
 		}
 	}
-
 }

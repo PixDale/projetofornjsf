@@ -21,11 +21,18 @@
             <h3>Abertura de Pedido</h3>
             <p:panelGrid columns="6">
                 <p:outputLabel value="Número" />
-                <p:inputText value="" />
+                <p:inputText value="#{pedidoMB.pedido.numero}" />
                 <p:outputLabel value="Data" />
-                <p:inputText value=""/>
-                <p:outputLabel value="Cliente" />
-                <p:inputText value=""/>
+                <p:inputText value="#{pedidoMB.pedido.data}"/>
+                <p:outputLabel value="Cliente" for="autoCliente"/>
+                <p:autoComplete id="autoCliente"
+                                forceSelection="true"
+                                value="#{pedidoMB.pedido.cliente}"                                
+                                completeMethod="#{clienteMB.clientes}"
+                                var="aux"
+                                itemValue="#{aux}"
+                                itemLabel="#{aux.nome}"
+                                converter="converterCliente"/>
                                 
             </p:panelGrid>
              <p:commandButton value="Salvar" update=":formCliente" />

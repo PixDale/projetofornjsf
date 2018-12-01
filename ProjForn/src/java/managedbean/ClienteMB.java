@@ -1,5 +1,6 @@
 package managedbean;
 import java.util.ArrayList;
+import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import modelo.Cliente;
@@ -56,8 +57,8 @@ public class ClienteMB {
         servico.removerCliente(cliente);
     }
     
-    public ArrayList<Cliente> getClientes(){
+    public List<Cliente> getClientes(){
         return servico.getClientes();
     }
-    
+
 }

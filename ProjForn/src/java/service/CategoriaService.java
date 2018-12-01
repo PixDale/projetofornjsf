@@ -43,9 +43,7 @@ public class CategoriaService {
         for(Categoria e: listaCategorias){
            if(e.getDescricao().equals(value))
                return e;
-        
         }
-        
         return null;
     }
     

@@ -18,6 +18,7 @@ import modelo.ProdutoExportacao;
 import modelo.ProdutoMercadoInterno;
 import org.primefaces.event.RowEditEvent;
 import service.CategoriaService;
+import service.PedidoService;
 import service.ProdutoService;
 
 /**
@@ -36,6 +37,7 @@ public class ProdutoMB implements Serializable{
     private ProdutoMercadoInterno produtomi = new ProdutoMercadoInterno();
     private Categoria categoriaEscolhida;
     private CategoriaService categoriaService = new CategoriaService();
+    private PedidoService pedidoService = new PedidoService();
     private static int codigogeral = 0;
 
     public Categoria getCategoriaEscolhida() {
@@ -79,7 +81,8 @@ public class ProdutoMB implements Serializable{
     }
      
     public void removerProduto(Produto produto){
-        servico.removerProduto(produto);
+        if(pedidoService.checkProduto(produto))
+            servico.removerProduto(produto);
     }
 
     public Produto getSelectedProduto() {

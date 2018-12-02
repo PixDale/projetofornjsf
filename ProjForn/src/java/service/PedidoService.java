@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import modelo.ItemPedido;
 import modelo.Pedido;
+import modelo.Produto;
 
 /**
  *
@@ -52,6 +53,16 @@ public class PedidoService {
             }
         }
         return -1;
+    }
+    
+    public boolean checkProduto(Produto produto){
+        for(Pedido p : listaPedido){
+            for(ItemPedido c : p.getItensPedido()){
+                if(c.getProduto().equals(produto))
+                    return false;
+            }
+        }
+        return true;
     }
     
     

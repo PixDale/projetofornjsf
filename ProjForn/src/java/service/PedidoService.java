@@ -22,7 +22,7 @@ public class PedidoService {
         listaPedido.add(c);
     }
     
-    public ArrayList<Pedido> getPedidos(){
+    public List<Pedido> getPedidos(){
         return listaPedido;
     }
     

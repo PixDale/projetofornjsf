@@ -2,7 +2,8 @@
                xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:p="http://primefaces.org/ui">
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
                 
         <ui:define name="title">
 		<h:outputText value="Cadastro de Pedidos" />
@@ -70,11 +71,25 @@
                     <h:outputText value="#{comp.data}" />
                 </p:column>
                 <p:column headerText="Itens">
-                    <p:commandButton value="Ver Itens" icon="info" actionListener="#{pedidoMB.viewProdutos()}" />
+                    <p:rowToggler />
                 </p:column>
                 <p:column headerText="Cliente">
                     <h:outputText value="#{comp.cliente.nome}" />
                 </p:column>
+                
+                <p:rowExpansion>
+                    <p:dataTable var="prod" value="#{pedidoMB.getItemPedidoByNumPedido(comp.numero)}">
+                        <p:column headerText="Num Pedido">
+                            <h:outputText value="#{comp.numero}" />
+                        </p:column>
+                        <p:column headerText="Produto">
+                            <h:outputText value="#{prod.produto.nome}" />
+                        </p:column>
+                        <p:column headerText="Quantidade">
+                            <h:outputText value="#{prod.quantidade}" />
+                        </p:column>
+                    </p:dataTable>
+                </p:rowExpansion>
                 
             </p:dataTable>
         </h:form>

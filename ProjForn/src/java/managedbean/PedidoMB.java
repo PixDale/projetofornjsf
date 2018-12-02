@@ -102,9 +102,10 @@ public class PedidoMB implements Serializable{
         servico.removerPedido(pedido);
     }
     
-    public ArrayList<Pedido> getPedidos(){
+    public List<Pedido> getPedidos(){
         return servico.getPedidos();
     }
+
     public void inserirProduto(){
         System.out.println("-----------------------------------------------------------------------------------------------------------------");
         System.out.println(itempedido.getNumeropedido()+" - "+itempedido.getQuantidade()+" - "+itempedido.getProduto().getNome());
@@ -127,7 +128,7 @@ public class PedidoMB implements Serializable{
     }
     public List<Produto> completeProduto(String query) {
         List<Produto> allProdutos = servicopro.getProdutos(0);
-        List<Produto> filteredProdutos = new ArrayList<Produto>();
+        List<Produto> filteredProdutos = new ArrayList<>();
 
         for (int i = 0; i < allProdutos.size(); i++) {
             Produto skin = allProdutos.get(i);
@@ -141,7 +142,7 @@ public class PedidoMB implements Serializable{
         List<Pedido> listapedido = getPedidos();
         for (Pedido p : listapedido) {
             if (p.getNumero() == num) {
-                return p.getItens();
+                return p.getItensPedido();
             }
         }
         return null;
@@ -149,11 +150,8 @@ public class PedidoMB implements Serializable{
     public void viewProdutos() {
         Map<String,Object> options = new HashMap<>();
         options.put("modal", true);
-        options.put("width", 640);
-        options.put("height", 340);
-        options.put("contentWidth", "100%");
-        options.put("contentHeight", "100%");
-        options.put("headerElement", "customheader");
+        Map<String, List<String>> params = new HashMap<>();
+        //params.put("selectedDepartments", Arrays.asList(selectedDeptsAsParam));
         RequestContext.getCurrentInstance().openDialog("dfitens", options, null);
     }
 

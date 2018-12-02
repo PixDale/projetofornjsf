@@ -12,6 +12,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import modelo.Categoria;
 import service.CategoriaService;
+import service.ProdutoService;
 
 /**
  *
@@ -23,6 +24,7 @@ public class CategoriaMB implements Serializable{
     private Categoria categoria = new Categoria();
     private CategoriaService servico = new CategoriaService();
     private Categoria selectedCategoria;
+    private ProdutoService servicopro = new ProdutoService();
    
   
 
@@ -55,6 +57,7 @@ public class CategoriaMB implements Serializable{
     }
     
     public void removerCategoria(Categoria categoria){
+        if(servicopro.checkCategoria(categoria))
         servico.removerCategoria(categoria);
     }
     

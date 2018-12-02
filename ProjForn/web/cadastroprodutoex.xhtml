@@ -22,9 +22,7 @@
         -->
         <h:form id="formProdex">
 
-            <p:panelGrid columns="8">
-                <p:outputLabel value="Código" />
-                <p:inputText value="#{produtoMB.produtoex.codigo}" />
+            <p:panelGrid columns="6">
                 <p:outputLabel value="Nome" />
                 <p:inputText value="#{produtoMB.produtoex.nome}"/>
                 <p:outputLabel value="Categoria" />
@@ -47,7 +45,7 @@
             <p:commandButton value="Salvar" action="#{produtoMB.salvarProduto()}" update=":formProdex" />
             
             <br /><br />
-
+            <p:growl id="msgs" showDetail="true"/>
             <p:dataTable var="prodex" value="#{produtoMB.getProdutos(1)}"
                          id = "dataProdutos"
                          rows="10"
@@ -60,28 +58,67 @@
                          rowKey="#{prodex.codigo}"
                          resizableColumns="true">
                 
+               
+                
                 <p:column headerText="Código" filterBy="#{prodex.codigo}" 
                           filterMatchMode="contains">
                     <h:outputText value="#{prodex.codigo}"/>
                 </p:column>
                 <p:column headerText="Nome" filterBy="#{prodex.nome}" 
                           filterMatchMode="contains">
-                    <h:outputText value="#{prodex.nome}" />
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{prodex.nome}" /></f:facet>
+                        <f:facet name="input"><h:inputText value="#{prodex.nome}" style="width:100%" label="Nome"/></f:facet>
+                    </p:cellEditor>
+                   
                 </p:column>
-                <p:column headerText="Categoria">
-                    <h:outputText value="#{prodex.categoria.getDescricao()}" />
+                <p:column headerText="Categoria" filterBy="#{prodex.categoria.getDescricao()}" 
+                          filterMatchMode="contains">
+                    <p:cellEditor>
+                        <f:facet name="output"> <h:outputText value="#{prodex.categoria.getDescricao()}"/> </f:facet> 
+                        <f:facet name="input">
+                            <p:selectOneMenu value="#{prodex.categoria}" converter="converterCategoria" style="width:100%">
+                            <f:selectItems value="#{produtoMB.categorias}" var="aux"
+                                   itemValue="#{aux}" itemLabel="#{aux.descricao}" />
+                            </p:selectOneMenu>
+                        </f:facet>
+                        
+                    </p:cellEditor>
+                   
                 </p:column>
                 <p:column headerText="Preço">
-                    <h:outputText value="#{prodex.preco}" />
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{prodex.preco}"/></f:facet>
+                        <f:facet name="input"><h:inputText value="#{prodex.preco}"/></f:facet>
+                    </p:cellEditor>
+                    
                 </p:column>
                 <p:column headerText="Moeda">
                     <h:outputText value="#{prodex.moeda}" />
                 </p:column>
                 <p:column headerText="Imposto">
-                    <h:outputText value="#{prodex.imposto}" />
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{prodex.imposto}"/> </f:facet>
+                        <f:facet name="input"><h:inputText value="#{prodex.imposto}"/></f:facet>
+                    </p:cellEditor>
+                  
                 </p:column>
                 <p:column headerText="Destino">
-                    <h:outputText value="#{prodex.destino}" />
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{prodex.destino}"/></f:facet>
+                        <f:facet name="input"><h:inputText value="#{prodex.destino}"/></f:facet>
+                    </p:cellEditor>
+                    
+                </p:column>
+                
+                <p:column style="width:32px">
+                    <p:rowEditor />
+                </p:column>
+                <p:column style="width:32px">
+                    <p:commandLink styleClass="ui-icon ui-icon-trash" 
+                                   actionListener="#{produtoMB.removerProduto(prodex)}"
+                                   update="dataProdutos"
+                                   />
                 </p:column>
 
             </p:dataTable>

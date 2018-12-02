@@ -27,6 +27,7 @@ public class ClienteMB implements Serializable{
     private Cliente cliente = new Cliente();
     private ClienteService servico = new ClienteService();
     private Cliente selectedCliente;
+    private static int codigogeral = 0;
 
     public void setSelectedCliente(Cliente c){
         selectedCliente = c;
@@ -50,12 +51,14 @@ public class ClienteMB implements Serializable{
     
     
     public void salvarCliente(){
+        cliente.setCodigo(++codigogeral);
         servico.salvarCliente(cliente);
         cliente = new Cliente();
     }
     
     public void removerCliente(Cliente cliente){
-        servico.removerCliente(cliente);
+        if(cliente.getPedidos().isEmpty())
+            servico.removerCliente(cliente);
     }
     
     public List<Cliente> getClientes(){

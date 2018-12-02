@@ -20,10 +20,7 @@
         -->
         <h:form id="formCliente">
             <h3>Abertura de Pedido</h3>
-            <p:panelGrid columns="6">
-                <p:outputLabel value="Número" />
-                <p:inputText value="#{pedidoMB.pedido.numero}" />
-                
+            <p:panelGrid columns="4">
                 <p:outputLabel for="event" value="Data:" />
                 <p:calendar id="event" value="#{pedidoMB.pedido.data}">
                     <p:ajax event="dateSelect" listener="#{pedidoMB.onDateSelect}"/>
@@ -63,7 +60,17 @@
             <br /><br />
             
 
-            <p:dataTable var="comp" value="#{pedidoMB.pedidos}" resizableColumns="true">
+            <p:dataTable var="comp" value="#{pedidoMB.pedidos}" resizableColumns="true"
+                         id = "dataPedidos"
+                         rows="10"
+                         paginator="true"
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15"
+                         editable="true"
+                         selection="#{pedidoMB.selectedPedido}"
+                         selectionMode="single"
+                         rowKey="#{comp.numero}">
+                
                 <p:column headerText="Número">
                     <h:outputText value="#{comp.numero}" />
                 </p:column>
@@ -80,19 +87,36 @@
                 <p:rowExpansion>
                     <div align="center">
                         <p:dataTable var="prod" value="#{pedidoMB.getItemPedidoByNumPedido(comp.numero)}" style="width:60%">
-                        <p:column headerText="Num Pedido">
-                            <h:outputText value="#{comp.numero}" />
-                        </p:column>
                         <p:column headerText="Produto">
                             <h:outputText value="#{prod.produto.nome}" />
                         </p:column>
                         <p:column headerText="Quantidade">
                             <h:outputText value="#{prod.quantidade}" />
                         </p:column>
+                        <p:column headerText="Valor Unitario">
+                            <h:outputText value="#{prod.produto.preco}"/>
+                        </p:column>
+                        <p:column headerText="Imposto Total">
+                            <h:outputText value="#{pedidoMB.impostoTotal(prod)}"/>
+                        </p:column>
+                        <p:column headerText="Total Item">
+                            <h:outputText value="#{pedidoMB.valorTotalUnitario(prod)}"/>
+                        </p:column>
+                        
+                            
+                        
                         </p:dataTable>
                     </div>
                 </p:rowExpansion>
-                
+                <p:column headerText="Total Pedido">
+                    <h:outputText value="#{pedidoMB.valorTotal(comp)}" />
+                </p:column>
+                <p:column style="width:32px">
+                    <p:commandLink styleClass="ui-icon ui-icon-trash" 
+                                   actionListener="#{pedidoMB.removerPedido(comp)}"
+                                   update="dataPedidos"
+                                   />
+                </p:column>
             </p:dataTable>
         </h:form>
 	</ui:define>

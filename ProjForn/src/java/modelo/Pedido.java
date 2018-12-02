@@ -1,4 +1,6 @@
 package modelo;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -15,23 +17,23 @@ import java.util.List;
  */
 public class Pedido {
     private int numero;
-    private Date data;
+   
+    private Date data = new Date();
     private List<ItemPedido> itenspedido = new ArrayList<>();
     private Cliente cliente;
-    
-    
    
-
     public int getNumero() {
         return numero;
+        
     }
-
+    
     public void setNumero(int numero) {
         this.numero = numero;
     }
 
     public Date getData() {
         return data;
+        
     }
 
     public void setData(Date data) {

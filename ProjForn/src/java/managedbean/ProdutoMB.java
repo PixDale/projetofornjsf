@@ -8,12 +8,15 @@ package managedbean;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import modelo.Categoria;
 import modelo.Produto;
 import modelo.ProdutoExportacao;
 import modelo.ProdutoMercadoInterno;
+import org.primefaces.event.RowEditEvent;
 import service.CategoriaService;
 import service.ProdutoService;
 
@@ -33,6 +36,7 @@ public class ProdutoMB implements Serializable{
     private ProdutoMercadoInterno produtomi = new ProdutoMercadoInterno();
     private Categoria categoriaEscolhida;
     private CategoriaService categoriaService = new CategoriaService();
+    private static int codigogeral = 0;
 
     public Categoria getCategoriaEscolhida() {
         return categoriaEscolhida;
@@ -60,14 +64,13 @@ public class ProdutoMB implements Serializable{
     }
     
     public void salvarProduto(){
-        
         if(produtoex.getDestino()==null){
-            
+            produtomi.setCodigo(++codigogeral);
             produtomi.setCategoria(categoriaEscolhida);
             servico.salvarProduto(produtomi);
             produtomi = new ProdutoMercadoInterno();
         } else {
-           
+            produtoex.setCodigo(++codigogeral);
             produtoex.setCategoria(categoriaEscolhida);
             servico.salvarProduto(produtoex);
             produtoex = new ProdutoExportacao();
@@ -75,7 +78,7 @@ public class ProdutoMB implements Serializable{
         System.out.println("alo");
     }
      
-    public void removerCliente(Produto produto){
+    public void removerProduto(Produto produto){
         servico.removerProduto(produto);
     }
 
@@ -104,6 +107,14 @@ public class ProdutoMB implements Serializable{
     }
     public ArrayList<Produto> getProdutos(int tipo){
         return servico.getProdutos(tipo);
+    }
+    
+    public void onRowEdit(RowEditEvent event) {
+       FacesMessage msg = new 
+        FacesMessage("Produto Editado",
+                ((Produto) event.getObject()).getNome());
+       FacesContext.getCurrentInstance().
+               addMessage(null, msg);
     }
 
     

@@ -7,6 +7,7 @@ package service;
 
 import java.util.ArrayList;
 import java.util.List;
+import modelo.Categoria;
 import modelo.Produto;
 import modelo.ProdutoExportacao;
 import modelo.ProdutoMercadoInterno;
@@ -56,4 +57,15 @@ public class ProdutoService {
         }
         return null;
     }
+    
+    public boolean checkCategoria(Categoria c){
+        for(Produto p : listaProduto){
+            if(c.equals(p.getCategoria()))
+                return false;
+        }
+        return true;
+        
+    }
+    
+ 
 }

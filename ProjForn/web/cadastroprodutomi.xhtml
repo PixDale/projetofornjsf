@@ -22,13 +22,11 @@
         -->
         <h:form id="formProdmi">
 
-            <p:panelGrid columns="8">
-                <p:outputLabel value="Código" />
-                <p:inputText value="#{produtoMB.produtomi.codigo}" />
+            <p:panelGrid columns="6">
                 <p:outputLabel value="Nome" />
                 <p:inputText value="#{produtoMB.produtomi.nome}"/>
                 <p:outputLabel value="Categoria" />
-                <p:selectOneMenu value="#{produtoMB.categoriaEscolhida}" converter="converterCategoria" style="width:100%">
+                <p:selectOneMenu value="#{produtoMB.categoriaEscolhida}" converter="converterCategoria" style="width:100px">
                    <f:selectItems value="#{produtoMB.categorias}" var="aux"
                                    itemValue="#{aux}" itemLabel="#{aux.descricao}" />
                 </p:selectOneMenu>
@@ -47,27 +45,69 @@
             <p:commandButton value="Salvar" action="#{produtoMB.salvarProduto()}" update=":formProdmi" />
             <br /><br />
 
-            <p:dataTable var="comp" value="#{produtoMB.getProdutos(2)}" 
-                       
+            <p:dataTable var="comp" value="#{produtoMB.getProdutos(2)}"
+                         id = "dataProdutosmi"
+                         rows="10"
+                         paginator="true"
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15"
+                         editable="true"
+                         selection="#{produtoMB.selectedProduto}"
+                         selectionMode="single"
+                         rowKey="#{comp.codigo}"
                          resizableColumns="true">
                 
-                <p:column headerText="Código">
+                <p:column headerText="Código" filterBy="#{comp.codigo}" 
+                          filterMatchMode="contains">
                     <h:outputText value="#{comp.codigo}" />
                 </p:column>
-                <p:column headerText="Nome">
-                    <h:outputText value="#{comp.nome}" />
+                <p:column headerText="Nome" filterBy="#{comp.nome}" 
+                          filterMatchMode="contains">
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{comp.nome}"/></f:facet>
+                        <f:facet name="input"><h:inputText value="#{comp.nome}"/></f:facet> 
+                    </p:cellEditor>
                 </p:column>
-                <p:column headerText="Categoria">
-                    <h:outputText value="#{comp.categoria.descricao}" />
+                <p:column headerText="Categoria" filterBy="#{comp.categoria.descricao}" 
+                          filterMatchMode="contains">
+                    <p:cellEditor>
+                        <f:facet name="output"> <h:outputText value="#{comp.categoria.getDescricao()}"/> </f:facet> 
+                        <f:facet name="input">
+                            <p:selectOneMenu value="#{comp.categoria}" converter="converterCategoria" style="width:100%">
+                            <f:selectItems value="#{produtoMB.categorias}" var="aux"
+                                   itemValue="#{aux}" itemLabel="#{aux.descricao}" />
+                            </p:selectOneMenu>
+                        </f:facet>
+                    </p:cellEditor>
                 </p:column>
+                
                 <p:column headerText="Preço">
-                    <h:outputText value="#{comp.preco}" />
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{comp.preco}"/></f:facet>
+                        <f:facet name="input"><h:inputText value="#{comp.preco}"/></f:facet>
+                    </p:cellEditor>
                 </p:column>
+                
                 <p:column headerText="Moeda">
                     <h:outputText value="#{comp.moeda}" />
                 </p:column>
                 <p:column headerText="Imposto">
-                    <h:outputText value="#{comp.imposto}" />
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{comp.imposto}"/></f:facet>
+                        <f:facet name="input"><h:inputText value="#{comp.imposto}"/></f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText = "Incentivo">
+                    <h:outputText value="#{comp.getIncentivo()}"/>
+                </p:column>
+                <p:column style="width:32px">
+                    <p:rowEditor />
+                </p:column>
+                <p:column style="width:32px">
+                    <p:commandLink styleClass="ui-icon ui-icon-trash" 
+                                   actionListener="#{produtoMB.removerProduto(comp)}"
+                                   update="dataProdutosmi"
+                                   />
                 </p:column>
 
             </p:dataTable>

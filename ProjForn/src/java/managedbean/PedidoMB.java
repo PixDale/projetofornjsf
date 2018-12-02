@@ -42,6 +42,7 @@ public class PedidoMB implements Serializable{
     private Pedido selectedPedido;
     private ItemPedido itempedido = new ItemPedido();
     private ProdutoService servicoproduto = new ProdutoService();
+    private static int codigogeral = 0;
     
     public void setSelectedPedido(Pedido p){
         selectedPedido = p;
@@ -67,7 +68,7 @@ public class PedidoMB implements Serializable{
     public void onDateSelect(SelectEvent event) {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", format.format(event.getObject())));
+        
     }
     
       public List<Cliente> completeCliente(String query) {
@@ -87,6 +88,7 @@ public class PedidoMB implements Serializable{
     public void salvarPedido(){
         try{
         if(servicocliente.checkClientes(pedido.getCliente())){
+            pedido.setNumero(++codigogeral);
             servicopedido.salvarPedido(pedido);
             servicocliente.addPedidoToCliente(pedido.getNumero(), pedido.getCliente().getCodigo());
             pedido = new Pedido();
@@ -110,8 +112,10 @@ public class PedidoMB implements Serializable{
     public void inserirProduto(){
         System.out.println("-----------------------------------------------------------------------------------------------------------------");
         System.out.println(itempedido.getNumeropedido()+" - "+itempedido.getQuantidade()+" - "+itempedido.getProduto().getNome());
+        if(itempedido.getQuantidade()>0){
         if(!servicopedido.inserirProduto(itempedido)){
             //mostrar mensagem de erro
+        }
         }
         itempedido = new ItemPedido();
         System.out.println(servicopedido.getPedidos().get(0));
@@ -168,5 +172,23 @@ public class PedidoMB implements Serializable{
         //params.put("selectedDepartments", Arrays.asList(selectedDeptsAsParam));
         RequestContext.getCurrentInstance().openDialog("dfitens", options, null);
     }
+    
+    public float valorTotalUnitario(ItemPedido ped){
+        return (float) (ped.getQuantidade()*(ped.getProduto().getPreco()+ped.getProduto().getImposto()));
+    }
+    
+    public float impostoTotal(ItemPedido ped){
+        return (float) (ped.getQuantidade()*(ped.getProduto().getImposto()));
+    }
+    
+    public float valorTotal(Pedido ped){
+        float aux=0;
+        for(ItemPedido p : ped.getItensPedido()){
+            aux += (p.getQuantidade()*(p.getProduto().getPreco()+p.getProduto().getImposto()));
+        }
+        System.out.println(aux);
+        return aux;
+    }
+    
 
 }

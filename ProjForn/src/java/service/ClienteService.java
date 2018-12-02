@@ -35,6 +35,13 @@ public class ClienteService {
         }
         return null;
     }
+    public void addPedidoToCliente(int numPedido, int numCliente) {
+        for (Cliente c : listaCliente) {
+            if (c.getCodigo() == numCliente) {
+                c.addPedido(numPedido);
+            }
+        }
+    }
     
     public boolean checkClientes(Cliente cod){
         for (Cliente c : listaCliente){

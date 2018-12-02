@@ -8,7 +8,7 @@ public class Cliente {
     private String telefone;
     private int status;
     private double limite;
-    private ArrayList<Pedido> pedidos = new ArrayList();
+    private ArrayList<Integer> pedidos = new ArrayList();
 
     public int getCodigo() {
         return codigo;
@@ -58,13 +58,14 @@ public class Cliente {
         this.limite = limite;
     }
 
-    public ArrayList<Pedido> getPedidos() {
+    public ArrayList<Integer> getPedidos() {
         return pedidos;
     }
 
-    public void setPedidos(ArrayList<Pedido> pedidos) {
-        this.pedidos = pedidos;
+    public void addPedido(int numPedido) {
+        pedidos.add(numPedido);
     }
+    
     
     
 }

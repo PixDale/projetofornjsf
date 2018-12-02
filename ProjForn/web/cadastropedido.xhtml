@@ -78,7 +78,8 @@
                 </p:column>
                 
                 <p:rowExpansion>
-                    <p:dataTable var="prod" value="#{pedidoMB.getItemPedidoByNumPedido(comp.numero)}">
+                    <div align="center">
+                        <p:dataTable var="prod" value="#{pedidoMB.getItemPedidoByNumPedido(comp.numero)}" style="width:60%">
                         <p:column headerText="Num Pedido">
                             <h:outputText value="#{comp.numero}" />
                         </p:column>
@@ -88,7 +89,8 @@
                         <p:column headerText="Quantidade">
                             <h:outputText value="#{prod.quantidade}" />
                         </p:column>
-                    </p:dataTable>
+                        </p:dataTable>
+                    </div>
                 </p:rowExpansion>
                 
             </p:dataTable>

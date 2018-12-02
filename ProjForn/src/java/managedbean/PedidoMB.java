@@ -37,11 +37,11 @@ import service.ProdutoService;
 
 public class PedidoMB implements Serializable{
     private Pedido pedido = new Pedido();
-    private PedidoService servico = new PedidoService();
-    private ClienteService servicocli = new ClienteService();
+    private PedidoService servicopedido = new PedidoService();
+    private ClienteService servicocliente = new ClienteService();
     private Pedido selectedPedido;
     private ItemPedido itempedido = new ItemPedido();
-    private ProdutoService servicopro = new ProdutoService();
+    private ProdutoService servicoproduto = new ProdutoService();
     
     public void setSelectedPedido(Pedido p){
         selectedPedido = p;
@@ -52,7 +52,7 @@ public class PedidoMB implements Serializable{
     }
     
     public void removeSelectedPedido(){
-        servico.removerPedido(selectedPedido);
+        servicopedido.removerPedido(selectedPedido);
         selectedPedido = null;
     }
     
@@ -71,7 +71,7 @@ public class PedidoMB implements Serializable{
     }
     
       public List<Cliente> completeCliente(String query) {
-        List<Cliente> allClientes = servicocli.getClientes();
+        List<Cliente> allClientes = servicocliente.getClientes();
         List<Cliente> filteredClientes = new ArrayList<Cliente>();
          
         for (int i = 0; i < allClientes.size(); i++) {
@@ -86,8 +86,9 @@ public class PedidoMB implements Serializable{
     
     public void salvarPedido(){
         try{
-        if(servicocli.checkClientes(pedido.getCliente())){
-            servico.salvarPedido(pedido);
+        if(servicocliente.checkClientes(pedido.getCliente())){
+            servicopedido.salvarPedido(pedido);
+            servicocliente.addPedidoToCliente(pedido.getNumero(), pedido.getCliente().getCodigo());
             pedido = new Pedido();
         }
         
@@ -99,21 +100,21 @@ public class PedidoMB implements Serializable{
     }
     
     public void removerPedido(Pedido pedido){
-        servico.removerPedido(pedido);
+        servicopedido.removerPedido(pedido);
     }
     
     public List<Pedido> getPedidos(){
-        return servico.getPedidos();
+        return servicopedido.getPedidos();
     }
 
     public void inserirProduto(){
         System.out.println("-----------------------------------------------------------------------------------------------------------------");
         System.out.println(itempedido.getNumeropedido()+" - "+itempedido.getQuantidade()+" - "+itempedido.getProduto().getNome());
-        if(!servico.inserirProduto(itempedido)){
+        if(!servicopedido.inserirProduto(itempedido)){
             //mostrar mensagem de erro
         }
         itempedido = new ItemPedido();
-        System.out.println(servico.getPedidos().get(0));
+        System.out.println(servicopedido.getPedidos().get(0));
     }
 
     public ItemPedido getItempedido() {
@@ -127,7 +128,7 @@ public class PedidoMB implements Serializable{
         itempedido.setNumeropedido(numero);
     }
     public List<Produto> completeProduto(String query) {
-        List<Produto> allProdutos = servicopro.getProdutos(0);
+        List<Produto> allProdutos = servicoproduto.getProdutos(0);
         List<Produto> filteredProdutos = new ArrayList<>();
 
         for (int i = 0; i < allProdutos.size(); i++) {
@@ -146,6 +147,19 @@ public class PedidoMB implements Serializable{
             }
         }
         return null;
+    }
+    public List<Pedido> getPedidosByArrayNumPedido (List<Integer> num){
+        List<Pedido> listapedido = getPedidos();
+        List<Pedido> pedidosFiltrados = new ArrayList();
+        
+        for (Pedido p : listapedido) {
+            for (Integer i : num) {
+                if (i == p.getNumero()) {
+                    pedidosFiltrados.add(p);                    
+                }
+            }
+        }
+        return pedidosFiltrados;
     }
     public void viewProdutos() {
         Map<String,Object> options = new HashMap<>();

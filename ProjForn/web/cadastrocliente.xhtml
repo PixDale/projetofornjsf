@@ -59,8 +59,22 @@
                     <h:outputText value="#{cli.limite}" />
                 </p:column>
                 <p:column headerText="Pedidos">
-                    <h:outputText value="#{cli.pedidos}" />
+                    <p:rowToggler />
                 </p:column>
+                
+                <p:rowExpansion>
+                    <div align="right">
+                        <p:dataTable var="pedido" value="#{pedidoMB.getPedidosByArrayNumPedido(cli.pedidos)}" style="width: 50%">
+                            <p:column headerText="Num Pedido" style="width:30%">
+                                <h:outputText value="#{pedido.numero}" />
+                            </p:column>
+                            <p:column headerText="Data" style="width:30%">
+                                <h:outputText value="#{pedido.data}" />
+                            </p:column>
+                        </p:dataTable>
+                    </div>
+                    
+                </p:rowExpansion>
 
             </p:dataTable>
         </h:form>

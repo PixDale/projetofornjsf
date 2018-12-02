@@ -11,33 +11,20 @@ and open the template in the editor.
      
     <h:head>
 <title>Itens</title>
-<style type="text/css">
-    .ui-widget {
-        font-size: 90%;
-    }
-</style>
+
     </h:head>
      
     <h:body>
-<i id="customheader" class="pi pi-home" style="display:none"></i>
+        <i id="customheader" class="pi pi-home" style="display:none"></i>
  
-<p:dataTable var="item" value="#{produtoMB.cars}">
-    <p:column headerText="Id">
-        <h:outputText value="#{car.id}" />
-    </p:column>
- 
-    <p:column headerText="Year">
-        <h:outputText value="#{car.year}" />
-    </p:column>
- 
-    <p:column headerText="Brand">
-        <h:outputText value="#{car.brand}" />
-    </p:column>
- 
-    <p:column headerText="Color">
-        <h:outputText value="#{car.color}" />
-    </p:column>
-</p:dataTable>
+        <p:dataTable var="item" value="#{pedidoMB.getItemPedidoByNumPedido(1)}">
+            <p:column headerText="Produto">
+                <h:outputText value="#{item.produto.nome}" />
+            </p:column>
+            <p:column headerText="Quantidade">
+                <h:outputText value="#{item.quantidade}" />
+            </p:column>
+        </p:dataTable>
     </h:body>
      
 </html>

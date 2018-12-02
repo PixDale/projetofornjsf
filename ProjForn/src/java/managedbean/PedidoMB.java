@@ -11,7 +11,9 @@ package managedbean;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -20,6 +22,7 @@ import modelo.Cliente;
 import modelo.ItemPedido;
 import modelo.Pedido;
 import modelo.Produto;
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 import service.ClienteService;
 import service.PedidoService;
@@ -132,9 +135,26 @@ public class PedidoMB implements Serializable{
                 filteredProdutos.add(skin);
             }
         }
-
         return filteredProdutos;
     }
-    
+    public List<ItemPedido> getItemPedidoByNumPedido (int num){
+        List<Pedido> listapedido = getPedidos();
+        for (Pedido p : listapedido) {
+            if (p.getNumero() == num) {
+                return p.getItens();
+            }
+        }
+        return null;
+    }
+    public void viewProdutos() {
+        Map<String,Object> options = new HashMap<>();
+        options.put("modal", true);
+        options.put("width", 640);
+        options.put("height", 340);
+        options.put("contentWidth", "100%");
+        options.put("contentHeight", "100%");
+        options.put("headerElement", "customheader");
+        RequestContext.getCurrentInstance().openDialog("dfitens", options, null);
+    }
 
 }

@@ -70,7 +70,7 @@
                     <h:outputText value="#{comp.data}" />
                 </p:column>
                 <p:column headerText="Itens">
-                    <h:outputText  />
+                    <p:commandButton value="Ver Itens" icon="info" actionListener="#{pedidoMB.viewProdutos()}" />
                 </p:column>
                 <p:column headerText="Cliente">
                     <h:outputText value="#{comp.cliente.nome}" />

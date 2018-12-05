@@ -34,9 +34,10 @@ public class Pedido {
     }
 
     public Date getData() {
-        //DateFormat outputFormat = new SimpleDateFormat("MM/yyyy", Locale.pt_BR);
-        //DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX", Locale.pt_BR);
+        DateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
+        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX", Locale.US);
         //return formato.format(data);
+        //return outputFormat.format(data);
         return data;
         
     }

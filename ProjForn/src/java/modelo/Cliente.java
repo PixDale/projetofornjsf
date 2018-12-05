@@ -1,7 +1,8 @@
 package modelo;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Cliente {
+public class Cliente implements Serializable{
     private int codigo;
     private String nome;
     private String endereco;

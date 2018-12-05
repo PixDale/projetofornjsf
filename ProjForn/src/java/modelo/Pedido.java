@@ -1,9 +1,11 @@
 package modelo;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -32,6 +34,9 @@ public class Pedido {
     }
 
     public Date getData() {
+        //DateFormat outputFormat = new SimpleDateFormat("MM/yyyy", Locale.pt_BR);
+        //DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX", Locale.pt_BR);
+        //return formato.format(data);
         return data;
         
     }

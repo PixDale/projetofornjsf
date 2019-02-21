@@ -51,6 +51,7 @@ public class CategoriaMB implements Serializable{
     
     public void salvarCategoria(){
         if(!categoria.getDescricao().equals("")){
+            categoria.setDescricao(categoria.getDescricao().toUpperCase());
             servico.salvarCategoria(categoria);
             categoria = new Categoria();
         }

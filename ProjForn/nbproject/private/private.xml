@@ -5,9 +5,9 @@
         <group>
             <file>file:/C:/Users/felipe/Documents/NetBeansProjects/projetofornjsf/ProjForn/web/cadastropedido.xhtml</file>
             <file>file:/C:/Users/felipe/Documents/NetBeansProjects/projetofornjsf/ProjForn/src/java/managedbean/PedidoMB.java</file>
-            <file>file:/C:/Users/felipe/Documents/NetBeansProjects/projetofornjsf/ProjForn/src/java/managedbean/DFView.java</file>
-            <file>file:/C:/Users/felipe/Documents/NetBeansProjects/projetofornjsf/ProjForn/web/dfitens.xhtml</file>
-            <file>file:/C:/Users/felipe/Documents/NetBeansProjects/projetofornjsf/ProjForn/src/java/managedbean/CategoriaMB.java</file>
+            <file>file:/C:/Users/felipe/Documents/NetBeansProjects/projetofornjsf/ProjForn/src/java/service/PedidoService.java</file>
+            <file>file:/C:/Users/felipe/Documents/NetBeansProjects/projetofornjsf/ProjForn/src/java/service/ClienteService.java</file>
+            <file>file:/C:/Users/felipe/Documents/NetBeansProjects/projetofornjsf/ProjForn/src/java/modelo/Cliente.java</file>
         </group>
     </open-files>
 </project-private>

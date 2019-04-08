@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package managedbean;
 
 import java.io.Serializable;
@@ -14,10 +9,6 @@ import modelo.Categoria;
 import service.CategoriaService;
 import service.ProdutoService;
 
-/**
- *
- * @author Matheus
- */
 @ManagedBean
 @SessionScoped
 public class CategoriaMB implements Serializable{
@@ -28,7 +19,7 @@ public class CategoriaMB implements Serializable{
    
   
 
-        
+    
     public Categoria getCategoria() {
         return categoria;
     }

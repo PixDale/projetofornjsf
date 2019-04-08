@@ -1,20 +1,32 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package service;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import modelo.Categoria;
 
-/**
- *
- * @author Matheus
- */
 public class CategoriaService {
+    //EntityManagerFactory ef = Persistence.createEntityManagerFactory("ProjFornPU");
+    //EntityManager em = ef.createEntityManager();
     private static ArrayList<Categoria> listaCategorias = new ArrayList<Categoria>();
+    
+    /*public void salvarCategoria(Categoria c){
+        //Implementar validações
+        if(listaCategorias.size() > 0){ 
+        for (Categoria cat: listaCategorias){
+            if (cat.getDescricao().equals(c.getDescricao())){
+                return;
+            }
+        }
+        em.getTransaction().begin();        
+        em.persist(c);
+        em.getTransaction().commit();    
+        System.out.println("ID da tarefa: " + c.getId());
+        em.close();
+    }
+    */
     
     public void salvarCategoria(Categoria c){
        if(listaCategorias.size() > 0){ 
@@ -27,9 +39,8 @@ public class CategoriaService {
            System.out.println("SAIU DO FOR");
         listaCategorias.add(c);
     } else
-           listaCategorias.add(c);
-           
-    }
+           listaCategorias.add(c);     
+    } 
 
     public List<Categoria> getCategorias() {
         return listaCategorias;
@@ -46,5 +57,8 @@ public class CategoriaService {
         }
         return null;
     }
+    
+    
+    
     
 }

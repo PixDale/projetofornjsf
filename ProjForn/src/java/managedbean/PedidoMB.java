@@ -1,12 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-
 package managedbean;
-
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -28,10 +20,6 @@ import service.ClienteService;
 import service.PedidoService;
 import service.ProdutoService;
 
-/**
- *
- * @author 171711
- */
 @ManagedBean
 @SessionScoped
 
@@ -90,7 +78,7 @@ public class PedidoMB implements Serializable{
         if(servicocliente.checkClientes(pedido.getCliente())){
             pedido.setNumero(++codigogeral);
             servicopedido.salvarPedido(pedido);
-            servicocliente.addPedidoToCliente(pedido.getNumero(), pedido.getCliente().getCodigo());
+            servicocliente.addPedidoToCliente(pedido);
             pedido = new Pedido();
         }
         
@@ -102,7 +90,10 @@ public class PedidoMB implements Serializable{
     }
     
     public void removerPedido(Pedido pedido){
-        servicopedido.removerPedido(pedido);
+        if(servicopedido.removerPedido(pedido))
+            if(servicocliente.removePedidoOfCliente(pedido))
+                return;
+        //TODO Exibir algum erro
     }
     
     public List<Pedido> getPedidos(){

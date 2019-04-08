@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package managedbean;
 
 import java.io.Serializable;
@@ -20,11 +15,6 @@ import org.primefaces.event.RowEditEvent;
 import service.CategoriaService;
 import service.PedidoService;
 import service.ProdutoService;
-
-/**
- *
- * @author 171711
- */
 
 @ManagedBean
 @SessionScoped

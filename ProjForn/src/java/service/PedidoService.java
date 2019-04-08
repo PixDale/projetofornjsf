@@ -27,8 +27,8 @@ public class PedidoService {
         return listaPedido;
     }
     
-    public void removerPedido(Pedido c){
-        listaPedido.remove(c);
+    public boolean removerPedido(Pedido c){
+        return listaPedido.remove(c);
     }
     public Boolean inserirProduto (ItemPedido ip) {
         System.out.println("ENTROU NO INSERIR DO SERVICE");

@@ -1,12 +1,35 @@
 package modelo;
 
-public abstract class Produto {
+import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="produto")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "Produto_Tipo")
+public abstract class Produto implements Serializable {
+    @Id
+    @Column(name="id")
     private int codigo;
     private String nome;
+    
+    @ManyToOne
+    @JoinColumn(name="CategoriaID") //Retirar se der pau
     private Categoria categoria;
     private double preco;
     private int moeda;
     private double imposto;
+
+    public Produto() {
+    }
     
     
     

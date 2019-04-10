@@ -1,6 +1,12 @@
 package modelo;
 
-public class ProdutoMercadoInterno extends Produto{
+import java.io.Serializable;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+
+@Entity(name = "ProdutoMI")
+@DiscriminatorValue("mi")
+public class ProdutoMercadoInterno extends Produto implements Serializable{
     private boolean incentivo;
 
     public boolean isIncentivo() {

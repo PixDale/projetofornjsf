@@ -1,11 +1,12 @@
 package service;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import modelo.Cliente;
 import modelo.Pedido;
 
-public class ClienteService {
+public class ClienteService implements Serializable{
     private static List<Cliente> listaCliente = new ArrayList<Cliente>();
     
     public void salvarCliente(Cliente c){

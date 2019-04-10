@@ -21,13 +21,13 @@ import service.ProdutoService;
 
 public class ProdutoMB implements Serializable{
 
-    private ProdutoService servico = new ProdutoService();
+    private final ProdutoService servico = new ProdutoService();
     private Produto selectedProduto;
     private ProdutoExportacao produtoex = new ProdutoExportacao();
     private ProdutoMercadoInterno produtomi = new ProdutoMercadoInterno();
     private Categoria categoriaEscolhida;
-    private CategoriaService categoriaService = new CategoriaService();
-    private PedidoService pedidoService = new PedidoService();
+    private final CategoriaService categoriaService = new CategoriaService();
+    private final PedidoService pedidoService = new PedidoService();
     private static int codigogeral = 0;
 
     public Categoria getCategoriaEscolhida() {

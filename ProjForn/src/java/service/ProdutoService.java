@@ -1,5 +1,6 @@
 package service;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import modelo.Categoria;
@@ -7,7 +8,7 @@ import modelo.Produto;
 import modelo.ProdutoExportacao;
 import modelo.ProdutoMercadoInterno;
 
-public class ProdutoService {
+public class ProdutoService implements Serializable{
     private static ArrayList<Produto> listaProduto = new ArrayList<Produto>();
     
     public void salvarProduto(Produto c){

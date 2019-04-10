@@ -9,6 +9,9 @@ import javax.persistence.Entity;
 public class ProdutoExportacao extends Produto implements Serializable{
     private String destino;
 
+   
+    
+
     public String getDestino() {
         return destino;
     }

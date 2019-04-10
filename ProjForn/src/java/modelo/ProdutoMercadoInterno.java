@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 public class ProdutoMercadoInterno extends Produto implements Serializable{
     private boolean incentivo;
 
+  
+    
     public boolean isIncentivo() {
         return incentivo;
     }

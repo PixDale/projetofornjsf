@@ -3,7 +3,12 @@
   <persistence-unit name="ProjFornPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>modelo.Categoria</class>
-
+    <class>modelo.Cliente</class>
+    <class>modelo.ItemPedido</class>
+    <class>modelo.Pedido</class>
+    <class>modelo.Produto</class>
+    <class>modelo.ProdutoExportacao</class>
+    <class>modelo.ProdutoMercadoInterno</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/db-forn"/>

@@ -19,7 +19,7 @@ import service.ProdutoService;
 @ManagedBean
 @SessionScoped
 
-public class ProdutoMB implements Serializable{
+public class ProdutoMB {
 
     private final ProdutoService servico = new ProdutoService();
     private Produto selectedProduto;
@@ -98,7 +98,7 @@ public class ProdutoMB implements Serializable{
     public void setProdutomi(ProdutoMercadoInterno produtomi) {
         this.produtomi = produtomi;
     }
-    public ArrayList<Produto> getProdutos(int tipo){
+    public List<Produto> getProdutos(int tipo){
         return servico.getProdutos(tipo);
     }
     

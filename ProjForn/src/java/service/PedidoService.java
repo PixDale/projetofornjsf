@@ -1,22 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package service;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import modelo.ItemPedido;
 import modelo.Pedido;
 import modelo.Produto;
 
-/**
- *
- * @author 171711
- */
-public class PedidoService {
+public class PedidoService implements Serializable{
      private static ArrayList<Pedido> listaPedido = new ArrayList<Pedido>();
+
      
         
      public void salvarPedido(Pedido c){
@@ -27,19 +20,15 @@ public class PedidoService {
         return listaPedido;
     }
     
-    public void removerPedido(Pedido c){
-        listaPedido.remove(c);
+    public boolean removerPedido(Pedido c){
+        return listaPedido.remove(c);
     }
     public Boolean inserirProduto (ItemPedido ip) {
-        System.out.println("ENTROU NO INSERIR DO SERVICE");
-        System.out.println(ip.getNumeropedido()+" - "+ip.getQuantidade()+" - "+ip.getProduto().getNome());
+        //System.out.println("ENTROU NO INSERIR DO SERVICE");
+        //System.out.println(ip.getNumeropedido()+" - "+ip.getQuantidade()+" - "+ip.getProduto().getNome());
        for (Pedido p : listaPedido) {
-           
-           if(ip.getNumeropedido() == p.getNumero()) {
-               System.out.println("ACHOU O PRODUTO INFORMADO");
-               p.addItens(ip);
-               System.out.println("COLOCOU O ITEMPRODUTO NA LISTA");
-               
+           if(ip.getPedido_IP().getNumero() == p.getNumero()) {
+               p.addItens(ip);               
                return true;
            }
        }
@@ -64,6 +53,7 @@ public class PedidoService {
         }
         return true;
     }
+    
     
     
 }

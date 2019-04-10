@@ -1,19 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package service;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import modelo.Cliente;
+import modelo.Pedido;
 
-/**
- *
- * @author 171711
- */
-public class ClienteService {
+public class ClienteService implements Serializable{
     private static List<Cliente> listaCliente = new ArrayList<Cliente>();
     
     public void salvarCliente(Cliente c){
@@ -35,12 +28,20 @@ public class ClienteService {
         }
         return null;
     }
-    public void addPedidoToCliente(int numPedido, int numCliente) {
+    public void addPedidoToCliente(Pedido ped) {
         for (Cliente c : listaCliente) {
-            if (c.getCodigo() == numCliente) {
-                c.addPedido(numPedido);
+            if (c.getCodigo() == ped.getCliente().getCodigo()) {
+                c.addPedido(ped);
             }
         }
+    }
+    public boolean removePedidoOfCliente(Pedido ped) {
+        for (Cliente c : listaCliente) {
+            if (c.getCodigo() == ped.getCliente().getCodigo()) {
+                return c.removePedido(ped);
+            }
+        }
+        return false;
     }
     
     public boolean checkClientes(Cliente cod){

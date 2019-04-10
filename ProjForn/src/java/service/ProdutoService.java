@@ -1,10 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package service;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import modelo.Categoria;
@@ -12,11 +8,7 @@ import modelo.Produto;
 import modelo.ProdutoExportacao;
 import modelo.ProdutoMercadoInterno;
 
-/**
- *
- * @author 171711
- */
-public class ProdutoService {
+public class ProdutoService implements Serializable{
     private static ArrayList<Produto> listaProduto = new ArrayList<Produto>();
     
     public void salvarProduto(Produto c){

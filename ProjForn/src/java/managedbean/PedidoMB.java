@@ -1,12 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-
 package managedbean;
-
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -28,10 +20,6 @@ import service.ClienteService;
 import service.PedidoService;
 import service.ProdutoService;
 
-/**
- *
- * @author 171711
- */
 @ManagedBean
 @SessionScoped
 
@@ -43,6 +31,7 @@ public class PedidoMB implements Serializable{
     private ItemPedido itempedido = new ItemPedido();
     private ProdutoService servicoproduto = new ProdutoService();
     private static int codigogeral = 0;
+    private int numPedidoIP;
     
     public void setSelectedPedido(Pedido p){
         selectedPedido = p;
@@ -90,7 +79,7 @@ public class PedidoMB implements Serializable{
         if(servicocliente.checkClientes(pedido.getCliente())){
             pedido.setNumero(++codigogeral);
             servicopedido.salvarPedido(pedido);
-            servicocliente.addPedidoToCliente(pedido.getNumero(), pedido.getCliente().getCodigo());
+            servicocliente.addPedidoToCliente(pedido);
             pedido = new Pedido();
         }
         
@@ -102,23 +91,37 @@ public class PedidoMB implements Serializable{
     }
     
     public void removerPedido(Pedido pedido){
-        servicopedido.removerPedido(pedido);
+        if(servicopedido.removerPedido(pedido))
+            if(servicocliente.removePedidoOfCliente(pedido))
+                return;
+        //TODO Exibir algum erro
     }
     
     public List<Pedido> getPedidos(){
         return servicopedido.getPedidos();
     }
+    public Pedido getPedidoByNum(int num) {
+        List<Pedido> peds = getPedidos();
+        for (Pedido pe : peds) {
+            if(pe.getNumero() == num) {
+                return pe;
+            }
+        }
+        return null;
+    }
 
     public void inserirProduto(){
-        System.out.println("-----------------------------------------------------------------------------------------------------------------");
-        System.out.println(itempedido.getNumeropedido()+" - "+itempedido.getQuantidade()+" - "+itempedido.getProduto().getNome());
         if(itempedido.getQuantidade()>0){
-        if(!servicopedido.inserirProduto(itempedido)){
-            //mostrar mensagem de erro
-        }
+            pedido = getPedidoByNum(this.numPedidoIP);
+            if(pedido != null) {
+                itempedido.setPedido_IP(pedido);
+                if(!servicopedido.inserirProduto(itempedido)){
+                //mostrar mensagem de erro
+                }
+            }
         }
         itempedido = new ItemPedido();
-        System.out.println(servicopedido.getPedidos().get(0));
+        pedido = new Pedido();
     }
 
     public ItemPedido getItempedido() {
@@ -129,7 +132,7 @@ public class PedidoMB implements Serializable{
         this.itempedido = itempedido;
     }
     public void setItempedidoNumero(int numero) {
-        itempedido.setNumeropedido(numero);
+        //itempedido.setPedido_IP();
     }
     public List<Produto> completeProduto(String query) {
         List<Produto> allProdutos = servicoproduto.getProdutos(0);
@@ -189,6 +192,15 @@ public class PedidoMB implements Serializable{
         System.out.println(aux);
         return aux;
     }
+
+    public int getNumPedidoIP() {
+        return numPedidoIP;
+    }
+
+    public void setNumPedidoIP(int numPedidoIP) {
+        this.numPedidoIP = numPedidoIP;
+    }
+    
     
 
 }

@@ -37,6 +37,7 @@
             <br />
             <p:commandButton value="Salvar" action="#{clienteMB.salvarCliente()}" update=":formCliente" />
             <br /><br />
+            
 
             <p:dataTable var="cli" value="#{clienteMB.clientes}" resizableColumns="true"
                          id = "dataClientes"
@@ -88,7 +89,7 @@
                 
                 <p:rowExpansion>
                     <div align="right">
-                        <p:dataTable var="pedido" value="#{pedidoMB.getPedidosByArrayNumPedido(cli.pedidos)}" style="width: 50%">
+                        <p:dataTable var="pedido" value="#{cli.pedidos}" style="width: 50%">
                             <p:column headerText="Num Pedido" style="width:30%">
                                 <h:outputText value="#{pedido.numero}" />
                             </p:column>
@@ -112,6 +113,6 @@
                                    />
                 </p:column>
             </p:dataTable>
-        </h:form>
+            </h:form>
 	</ui:define>
 </ui:composition>

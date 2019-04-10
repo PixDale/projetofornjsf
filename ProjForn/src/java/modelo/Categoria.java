@@ -1,16 +1,21 @@
 package modelo;
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
-/**
- *
- * @author 171711
- */
-public class Categoria {
+import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="categoria")
+public class Categoria implements Serializable{
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private int id;
+    
     private String descricao;
+    
 
     public String getDescricao() {
         return descricao;
@@ -19,5 +24,14 @@ public class Categoria {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
     
 }

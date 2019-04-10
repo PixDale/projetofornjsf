@@ -1,15 +1,29 @@
 package modelo;
+
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
+@Entity
+@Table(name="cliente")
 public class Cliente implements Serializable{
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private int codigo;
     private String nome;
     private String endereco;
     private String telefone;
     private int status;
     private double limite;
-    private ArrayList<Integer> pedidos = new ArrayList();
+    
+    @OneToMany(mappedBy="cliente")
+    private List<Pedido> pedidos = new ArrayList();
 
     public int getCodigo() {
         return codigo;
@@ -58,13 +72,16 @@ public class Cliente implements Serializable{
     public void setLimite(double limite) {
         this.limite = limite;
     }
-
-    public ArrayList<Integer> getPedidos() {
+    
+    public List<Pedido> getPedidos() {
         return pedidos;
     }
 
-    public void addPedido(int numPedido) {
-        pedidos.add(numPedido);
+    public void addPedido(Pedido pedido) {
+        pedidos.add(pedido);
+    }
+    public boolean removePedido(Pedido pedido) {
+        return pedidos.remove(pedido);
     }
     
     

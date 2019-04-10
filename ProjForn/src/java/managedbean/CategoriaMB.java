@@ -1,23 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package managedbean;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import modelo.Categoria;
+import org.primefaces.event.RowEditEvent;
 import service.CategoriaService;
 import service.ProdutoService;
 
-/**
- *
- * @author Matheus
- */
 @ManagedBean
 @SessionScoped
 public class CategoriaMB implements Serializable{
@@ -27,8 +18,8 @@ public class CategoriaMB implements Serializable{
     private ProdutoService servicopro = new ProdutoService();
    
   
-
-        
+    public CategoriaMB(){}
+    
     public Categoria getCategoria() {
         return categoria;
     }
@@ -57,6 +48,7 @@ public class CategoriaMB implements Serializable{
         }
     }
     
+    
     public void removerCategoria(Categoria categoria){
         if(servicopro.checkCategoria(categoria))
         servico.removerCategoria(categoria);
@@ -64,5 +56,12 @@ public class CategoriaMB implements Serializable{
     
     public List<Categoria> getCategorias(){
         return servico.getCategorias();
+    }
+    
+    public void atualizaCat(RowEditEvent event) {
+        System.out.println("EVENTO de EDICAO de REGISTRO");
+        System.out.println(((Categoria)event.getObject()).getDescricao());
+        System.out.println(selectedCategoria.getDescricao());
+        
     }
 }

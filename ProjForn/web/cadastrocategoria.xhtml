@@ -44,6 +44,8 @@
                          selectionMode="single"
                          rowKey="#{cats.descricao}"
                          >
+                
+                <p:ajax event="rowEdit" listener="#{categoriaMB.atualizaCat}" update=":formCat" />
                 <p:column headerText="Categorias">
                     <p:cellEditor>
                         <f:facet name="output"><h:outputText value="#{cats.descricao}"/></f:facet>
@@ -51,10 +53,10 @@
                     </p:cellEditor>
                    
                 </p:column>
-                <p:column style="width:32px">
+                <p:column style="width:35px">
                     <p:rowEditor />
                 </p:column>
-                <p:column style="width:32px">
+                <p:column style="width:35px">
                     <p:commandLink styleClass="ui-icon ui-icon-trash" 
                                    actionListener="#{categoriaMB.removerCategoria(cats)}"
                                    update="dataCategoria"

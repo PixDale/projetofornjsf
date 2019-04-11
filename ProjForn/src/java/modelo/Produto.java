@@ -4,6 +4,8 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -18,6 +20,7 @@ import javax.persistence.Table;
 public abstract class Produto implements Serializable {
     @Id
     @Column(name="id")
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private int codigo;
     private String nome;
     
@@ -27,6 +30,11 @@ public abstract class Produto implements Serializable {
     private double preco;
     private int moeda;
     private double imposto;
+
+    public Produto() {
+    }
+
+
     
 
     public int getCodigo() {

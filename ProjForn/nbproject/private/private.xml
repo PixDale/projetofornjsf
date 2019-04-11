@@ -3,10 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/felipe/Documents/NetBeansProjects/projetofornjsf/ProjForn/src/java/modelo/Categoria.java</file>
             <file>file:/C:/Users/felipe/Documents/NetBeansProjects/projetofornjsf/ProjForn/src/java/service/CategoriaService.java</file>
             <file>file:/C:/Users/felipe/Documents/NetBeansProjects/projetofornjsf/ProjForn/web/cadastrocategoria.xhtml</file>
-            <file>file:/C:/Users/felipe/Documents/NetBeansProjects/projetofornjsf/ProjForn/src/java/service/ProdutoService.java</file>
             <file>file:/C:/Users/felipe/Documents/NetBeansProjects/projetofornjsf/ProjForn/src/java/managedbean/CategoriaMB.java</file>
+            <file>file:/C:/Users/felipe/Documents/NetBeansProjects/projetofornjsf/ProjForn/src/java/modelo/ProdutoExportacao.java</file>
         </group>
     </open-files>
 </project-private>

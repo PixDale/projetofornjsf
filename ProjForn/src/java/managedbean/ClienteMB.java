@@ -1,6 +1,5 @@
 package managedbean;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -10,9 +9,9 @@ import service.ClienteService;
 @ManagedBean
 @SessionScoped
 
-public class ClienteMB implements Serializable{
+public class ClienteMB {
     private Cliente cliente = new Cliente();
-    private ClienteService servico = new ClienteService();
+    private final ClienteService servico = new ClienteService();
     private Cliente selectedCliente;
     private static int codigogeral = 0;
 

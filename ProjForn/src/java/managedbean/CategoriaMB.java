@@ -11,14 +11,12 @@ import service.ProdutoService;
 
 @ManagedBean
 @SessionScoped
-public class CategoriaMB implements Serializable{
+public class CategoriaMB {
     private Categoria categoria = new Categoria();
-    private CategoriaService servico = new CategoriaService();
+    private final CategoriaService servico = new CategoriaService();
     private Categoria selectedCategoria;
-    private ProdutoService servicopro = new ProdutoService();
-   
+    private final ProdutoService servicopro = new ProdutoService();
   
-    public CategoriaMB(){}
     
     public Categoria getCategoria() {
         return categoria;
@@ -58,10 +56,12 @@ public class CategoriaMB implements Serializable{
         return servico.getCategorias();
     }
     
-    public void atualizaCat(RowEditEvent event) {
-        System.out.println("EVENTO de EDICAO de REGISTRO");
-        System.out.println(((Categoria)event.getObject()).getDescricao());
-        System.out.println(selectedCategoria.getDescricao());
+    public void onRowEdit(RowEditEvent event) {
+        Categoria c = (Categoria)event.getObject();
+        if(!c.getDescricao().equals("")){
+            c.setDescricao(c.getDescricao().toUpperCase());
+            servico.salvarCategoria(c);
+        }
         
     }
 }

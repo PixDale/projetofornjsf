@@ -6,7 +6,7 @@ import java.util.List;
 import modelo.Cliente;
 import modelo.Pedido;
 
-public class ClienteService implements Serializable{
+public class ClienteService {
     private static List<Cliente> listaCliente = new ArrayList<Cliente>();
     
     public void salvarCliente(Cliente c){

@@ -21,7 +21,7 @@
             Imposto
         -->
         <h:form id="formCat">
-
+            <p:growl id="msgs" showDetail="true"/>
             <p:panelGrid columns="8">
                 <p:outputLabel value="Categoria" />
                 <p:inputText value="#{categoriaMB.categoria.descricao}" />
@@ -33,6 +33,8 @@
             <p:commandButton value="Salvar" action="#{categoriaMB.salvarCategoria()}" update=":formCat" />
             <br /><br />
 
+            
+            
             <p:dataTable var="cats" value="#{categoriaMB.categorias}" resizableColumns="true"
                          id="dataCategoria"
                          rows="10"
@@ -40,18 +42,16 @@
                          paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                          rowsPerPageTemplate="5,10,15"
                          editable="true"
-                         selection="#{categoriaMB.selectedCategoria}"
                          selectionMode="single"
-                         rowKey="#{cats.descricao}"
+                         rowKey="#{cats.id}"
                          >
                 
-                <p:ajax event="rowEdit" listener="#{categoriaMB.atualizaCat}" update=":formCat" />
+                <p:ajax event="rowEdit" listener="#{categoriaMB.onRowEdit}" update=":formCat:msgs" />
                 <p:column headerText="Categorias">
                     <p:cellEditor>
                         <f:facet name="output"><h:outputText value="#{cats.descricao}"/></f:facet>
-                        <f:facet name="input"><h:inputText value="#{cats.descricao}"/></f:facet>
+                        <f:facet name="input"><p:inputText value="#{cats.descricao}"/></f:facet>
                     </p:cellEditor>
-                   
                 </p:column>
                 <p:column style="width:35px">
                     <p:rowEditor />

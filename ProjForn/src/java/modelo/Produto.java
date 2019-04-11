@@ -30,13 +30,11 @@ public abstract class Produto implements Serializable {
     private double preco;
     private int moeda;
     private double imposto;
-    
 
     public Produto() {
     }
 
-   
-    
+
     
 
     public int getCodigo() {

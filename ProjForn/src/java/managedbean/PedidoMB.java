@@ -23,13 +23,13 @@ import service.ProdutoService;
 @ManagedBean
 @SessionScoped
 
-public class PedidoMB implements Serializable{
+public class PedidoMB {
     private Pedido pedido = new Pedido();
-    private PedidoService servicopedido = new PedidoService();
-    private ClienteService servicocliente = new ClienteService();
+    private final PedidoService servicopedido = new PedidoService();
+    private final ClienteService servicocliente = new ClienteService();
     private Pedido selectedPedido;
     private ItemPedido itempedido = new ItemPedido();
-    private ProdutoService servicoproduto = new ProdutoService();
+    private final ProdutoService servicoproduto = new ProdutoService();
     private static int codigogeral = 0;
     private int numPedidoIP;
     
@@ -201,6 +201,4 @@ public class PedidoMB implements Serializable{
         this.numPedidoIP = numPedidoIP;
     }
     
-    
-
 }

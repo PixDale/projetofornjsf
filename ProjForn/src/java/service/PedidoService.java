@@ -7,8 +7,8 @@ import modelo.ItemPedido;
 import modelo.Pedido;
 import modelo.Produto;
 
-public class PedidoService implements Serializable{
-     private static ArrayList<Pedido> listaPedido = new ArrayList<Pedido>();
+public class PedidoService {
+     private static List<Pedido> listaPedido = new ArrayList<Pedido>();
 
      
         

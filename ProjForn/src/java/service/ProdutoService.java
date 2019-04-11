@@ -8,8 +8,8 @@ import modelo.Produto;
 import modelo.ProdutoExportacao;
 import modelo.ProdutoMercadoInterno;
 
-public class ProdutoService implements Serializable{
-    private static ArrayList<Produto> listaProduto = new ArrayList<Produto>();
+public class ProdutoService {
+    private static List<Produto> listaProduto = new ArrayList<Produto>();
     
     public void salvarProduto(Produto c){
         
@@ -17,9 +17,9 @@ public class ProdutoService implements Serializable{
         
     }
     
-    public ArrayList getProdutos(int tipo){
+    public List getProdutos(int tipo){
         if (tipo == 1) {
-            ArrayList<ProdutoExportacao> listaux = new ArrayList();
+            List<ProdutoExportacao> listaux = new ArrayList();
             for (Produto p : listaProduto) {
                 if(p instanceof ProdutoExportacao) {
                     listaux.add((ProdutoExportacao) p);

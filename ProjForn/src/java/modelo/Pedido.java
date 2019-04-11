@@ -28,7 +28,7 @@ public class Pedido implements Serializable{
     private Date data = new Date();
     
     @OneToMany(mappedBy="pedido")
-    private List<ItemPedido> itenspedido = new ArrayList<>();
+    private List<ItemPedido> itenspedido = new ArrayList<ItemPedido>();
     
     private Cliente cliente;
    

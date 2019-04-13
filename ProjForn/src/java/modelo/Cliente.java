@@ -25,6 +25,27 @@ public class Cliente implements Serializable{
     @OneToMany(mappedBy="cliente")
     private List<Pedido> pedidos = new ArrayList();
 
+    public Cliente(int codigo, String nome, String endereco, String telefone, int status, double limite) {
+        this.codigo = codigo;
+        this.nome = nome;
+        this.endereco = endereco;
+        this.telefone = telefone;
+        this.status = status;
+        this.limite = limite;
+    }
+
+    public Cliente(String nome, String endereco, String telefone, int status, double limite) {
+        this.nome = nome;
+        this.endereco = endereco;
+        this.telefone = telefone;
+        this.status = status;
+        this.limite = limite;
+    }
+
+     public Cliente() {
+    }
+    
+    
     public int getCodigo() {
         return codigo;
     }

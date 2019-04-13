@@ -24,7 +24,23 @@ public class ItemPedido implements Serializable{
     @OneToOne
     @JoinColumn(name = "ProdutoID", referencedColumnName = "id") //Se der pau trocara id para codigo
     private Produto produto;
+
+    public ItemPedido(int id, Pedido pedido, int quantidade, Produto produto) {
+        this.id = id;
+        this.pedido = pedido;
+        this.quantidade = quantidade;
+        this.produto = produto;
+    }
+
+    public ItemPedido(Pedido pedido, int quantidade, Produto produto) {
+        this.pedido = pedido;
+        this.quantidade = quantidade;
+        this.produto = produto;
+    }
     
+     public ItemPedido() {
+    }
+  
     private double totalItem(){
         return produto.getPreco()*quantidade;
     }

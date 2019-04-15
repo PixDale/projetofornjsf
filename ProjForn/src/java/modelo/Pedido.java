@@ -31,7 +31,21 @@ public class Pedido implements Serializable{
     private List<ItemPedido> itenspedido = new ArrayList<ItemPedido>();
     
     private Cliente cliente;
+
+    public Pedido(int numero, Cliente cliente, Date data) {
+        this.data = data;
+        this.numero = numero;
+        this.cliente = cliente;
+    }
+
+    public Pedido(Cliente cliente, Date data) {
+        this.data = data;
+        this.cliente = cliente;
+    }
    
+     public Pedido() {
+    }
+    
     public int getNumero() {
         return numero;
         

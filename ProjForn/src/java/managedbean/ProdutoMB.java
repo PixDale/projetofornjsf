@@ -39,7 +39,7 @@ public class ProdutoMB {
     }
     
     public List<Categoria> getCategorias(){
-      return categoriaService.getCategorias();
+      return categoriaService.getAll(Categoria.class);
     }
     
     private void removeSelectedProduto(){

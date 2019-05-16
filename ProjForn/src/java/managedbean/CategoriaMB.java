@@ -21,7 +21,7 @@ public class CategoriaMB {
 
     @PostConstruct
     public void init() {
-        listaCat = servico.getCategorias(); // Call the DB here.
+        listaCat = servico.getAll(Categoria.class); // Call the DB here.
     }
 
     public List<Categoria> getCategorias() {
@@ -49,14 +49,14 @@ public class CategoriaMB {
     public void salvarCategoria() {
         if (!categoria.getDescricao().equals("")) {
             categoria.setDescricao(categoria.getDescricao().toUpperCase());
-            servico.salvarCategoria(categoria);
+            servico.salvar(categoria);
             categoria = new Categoria();
             init();
         }
     }
 
     public void removerCategoria(Categoria categoria) {
-        if (servico.removerCategoria(categoria) == 0) {
+        if (servico.remover(categoria) == 0) {
             GrowlMB.success("Categoria removida com sucesso");
             init();
         } else {
@@ -71,7 +71,7 @@ public class CategoriaMB {
             if (!c.getDescricao().equals("")) {
 
                 c.setDescricao(c.getDescricao().toUpperCase());
-                servico.salvarCategoria(c);
+                servico.salvar(c);
                 init();
             }
         } catch (Exception e) {

@@ -1,5 +1,6 @@
 package service;
 
+import DAO.PedidoDAO;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,22 +8,12 @@ import modelo.ItemPedido;
 import modelo.Pedido;
 import modelo.Produto;
 
-public class PedidoService {
+public class PedidoService extends BaseService <Pedido>{
      private static List<Pedido> listaPedido = new ArrayList<Pedido>();
 
-     
-        
-     public void salvarPedido(Pedido c){
-        listaPedido.add(c);
-    }
-    
-    public List<Pedido> getPedidos(){
-        return listaPedido;
-    }
-    
-    public boolean removerPedido(Pedido c){
-        return listaPedido.remove(c);
-    }
+     public PedidoService(){
+         dao = new PedidoDAO();
+     }
     public Boolean inserirProduto (ItemPedido ip) {
         //System.out.println("ENTROU NO INSERIR DO SERVICE");
         //System.out.println(ip.getNumeropedido()+" - "+ip.getQuantidade()+" - "+ip.getProduto().getNome());

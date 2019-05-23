@@ -1,5 +1,6 @@
 package service;
 
+import DAO.ProdutoDAO;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,13 +9,11 @@ import modelo.Produto;
 import modelo.ProdutoExportacao;
 import modelo.ProdutoMercadoInterno;
 
-public class ProdutoService {
+public class ProdutoService extends BaseService <Produto>{
     private static List<Produto> listaProduto = new ArrayList<Produto>();
     
-    public void salvarProduto(Produto c){
-        
-        listaProduto.add(c);
-        
+    public ProdutoService(){
+        dao = new ProdutoDAO();
     }
     
     public List getProdutos(int tipo){
@@ -38,9 +37,6 @@ public class ProdutoService {
         return listaProduto;
     }
     
-    public void removerProduto(Produto c){
-        listaProduto.remove(c);
-    }
     public Produto getProdutoByNome(String str) {
         for (Produto c : listaProduto) {
             if(c.getNome().equals(str)) {

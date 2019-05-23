@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -32,6 +33,12 @@ public class PedidoMB {
     private final ProdutoService servicoproduto = new ProdutoService();
     private static int codigogeral = 0;
     private int numPedidoIP;
+    private List<Pedido> listaPed;
+    
+    @PostConstruct
+    public void init() {
+        listaPed = servicopedido.getAll(Pedido.class); // Call the DB here.
+    }
     
     public void setSelectedPedido(Pedido p){
         selectedPedido = p;
@@ -42,7 +49,7 @@ public class PedidoMB {
     }
     
     public void removeSelectedPedido(){
-        servicopedido.removerPedido(selectedPedido);
+        servicopedido.remover(selectedPedido);
         selectedPedido = null;
     }
     
@@ -61,7 +68,7 @@ public class PedidoMB {
     }
     
       public List<Cliente> completeCliente(String query) {
-        List<Cliente> allClientes = servicocliente.getClientes();
+        List<Cliente> allClientes = servicocliente.dao.getAll(Cliente.class);
         List<Cliente> filteredClientes = new ArrayList<Cliente>();
          
         for (int i = 0; i < allClientes.size(); i++) {
@@ -78,7 +85,7 @@ public class PedidoMB {
         try{
         if(servicocliente.checkClientes(pedido.getCliente())){
             pedido.setNumero(++codigogeral);
-            servicopedido.salvarPedido(pedido);
+            servicopedido.salvar(pedido);
             servicocliente.addPedidoToCliente(pedido);
             pedido = new Pedido();
         }
@@ -91,14 +98,14 @@ public class PedidoMB {
     }
     
     public void removerPedido(Pedido pedido){
-        if(servicopedido.removerPedido(pedido))
+        if(servicopedido.remover(pedido)==1)
             if(servicocliente.removePedidoOfCliente(pedido))
                 return;
         //TODO Exibir algum erro
     }
     
     public List<Pedido> getPedidos(){
-        return servicopedido.getPedidos();
+        return listaPed;
     }
     public Pedido getPedidoByNum(int num) {
         List<Pedido> peds = getPedidos();

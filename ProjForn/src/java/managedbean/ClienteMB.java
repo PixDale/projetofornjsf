@@ -1,9 +1,11 @@
 package managedbean;
 import java.io.Serializable;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import modelo.Cliente;
+import org.primefaces.event.RowEditEvent;
 import service.ClienteService;
 
 @ManagedBean
@@ -12,19 +14,14 @@ import service.ClienteService;
 public class ClienteMB {
     private Cliente cliente = new Cliente();
     private final ClienteService servico = new ClienteService();
-    private Cliente selectedCliente;
-    private static int codigogeral = 0;
+    private List<Cliente> listaCli;
 
-    public void setSelectedCliente(Cliente c){
-        selectedCliente = c;
+    @PostConstruct
+    public void init() {
+        listaCli = servico.getAll(Cliente.class); // Call the DB here.
     }
-    
-    public Cliente getSelectedCliente(){
-        return selectedCliente;
-    }
-    public void removeSelectedCliente(){
-        servico.removerCliente(selectedCliente);
-    }
+
+   
     
     
     public Cliente getCliente() {
@@ -37,18 +34,36 @@ public class ClienteMB {
     
     
     public void salvarCliente(){
-        cliente.setCodigo(++codigogeral);
-        servico.salvarCliente(cliente);
+        servico.salvar(cliente);
         cliente = new Cliente();
+        init();
     }
     
     public void removerCliente(Cliente cliente){
-        if(cliente.getPedidos().isEmpty())
-            servico.removerCliente(cliente);
+        if(cliente.getPedidos().isEmpty()){
+            servico.remover(cliente);
+            init();
+        }
     }
     
     public List<Cliente> getClientes(){
-        return servico.getClientes();
+        return listaCli;
+    }
+    public void onRowEdit(RowEditEvent event) {
+        try {
+            Cliente c = (Cliente) event.getObject();
+            //System.out.println("ID= " + c.getCodigo() + " = Desc= " + c.getNome());
+            if (!c.getNome().equals("")) {
+
+                c.setNome(c.getNome().toUpperCase());
+                servico.salvar(c);
+                init();
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            init();
+        }
     }
     
   

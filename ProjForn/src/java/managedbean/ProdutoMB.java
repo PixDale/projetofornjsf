@@ -43,7 +43,7 @@ public class ProdutoMB {
     }
     
     private void removeSelectedProduto(){
-        servico.removerProduto(selectedProduto);
+        servico.remover(selectedProduto);
     }
     
     public void gerarProduto(){
@@ -51,7 +51,7 @@ public class ProdutoMB {
         produtoex.setCodigo(2);
         produtoex.setNome("kk");
         produtoex.setDestino("rua");
-        servico.salvarProduto(produtoex);
+        servico.salvar(produtoex);
         System.out.println("Saiu");
     }
     
@@ -59,12 +59,12 @@ public class ProdutoMB {
         if(produtoex.getDestino()==null){
             produtomi.setCodigo(++codigogeral);
             produtomi.setCategoria(categoriaEscolhida);
-            servico.salvarProduto(produtomi);
+            servico.salvar(produtomi);
             produtomi = new ProdutoMercadoInterno();
         } else {
             produtoex.setCodigo(++codigogeral);
             produtoex.setCategoria(categoriaEscolhida);
-            servico.salvarProduto(produtoex);
+            servico.salvar(produtoex);
             produtoex = new ProdutoExportacao();
         }
         System.out.println("alo");
@@ -72,7 +72,7 @@ public class ProdutoMB {
      
     public void removerProduto(Produto produto){
         if(pedidoService.checkProduto(produto))
-            servico.removerProduto(produto);
+            servico.remover(produto);
     }
 
     public Produto getSelectedProduto() {

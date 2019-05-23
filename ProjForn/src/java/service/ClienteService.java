@@ -1,26 +1,20 @@
 package service;
 
+import DAO.ClienteDAO;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import modelo.Cliente;
 import modelo.Pedido;
 
-public class ClienteService {
-    private static List<Cliente> listaCliente = new ArrayList<Cliente>();
+public class ClienteService extends BaseService <Cliente> { 
     
-    public void salvarCliente(Cliente c){
-        listaCliente.add(c);
+    public ClienteService(){
+        dao = new ClienteDAO();
     }
     
-    public List<Cliente> getClientes(){
-        return listaCliente;
-    }
-
-    public void removerCliente(Cliente c){
-        listaCliente.remove(c);
-    }
     public Cliente getClienteByNome(String str) {
+        List<Cliente> listaCliente = getAll(Cliente.class);
         for (Cliente c : listaCliente) {
             if(c.getNome().equals(str)) {
                 return c;
@@ -29,6 +23,7 @@ public class ClienteService {
         return null;
     }
     public void addPedidoToCliente(Pedido ped) {
+        List<Cliente> listaCliente = getAll(Cliente.class);
         for (Cliente c : listaCliente) {
             if (c.getCodigo() == ped.getCliente().getCodigo()) {
                 c.addPedido(ped);
@@ -36,6 +31,7 @@ public class ClienteService {
         }
     }
     public boolean removePedidoOfCliente(Pedido ped) {
+        List<Cliente> listaCliente = getAll(Cliente.class);
         for (Cliente c : listaCliente) {
             if (c.getCodigo() == ped.getCliente().getCodigo()) {
                 return c.removePedido(ped);
@@ -45,6 +41,7 @@ public class ClienteService {
     }
     
     public boolean checkClientes(Cliente cod){
+        List<Cliente> listaCliente = getAll(Cliente.class);
         for (Cliente c : listaCliente){
             if(c.getCodigo() == cod.getCodigo()){
                 return true;

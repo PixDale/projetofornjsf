@@ -1,8 +1,6 @@
 package service;
 
 import DAO.ClienteDAO;
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import modelo.Cliente;
 import modelo.Pedido;
@@ -24,11 +22,9 @@ public class ClienteService extends BaseService <Cliente> {
     }
     public void addPedidoToCliente(Pedido ped) {
         List<Cliente> listaCliente = getAll(Cliente.class);
-        for (Cliente c : listaCliente) {
-            if (c.getCodigo() == ped.getCliente().getCodigo()) {
-                c.addPedido(ped);
-            }
-        }
+        listaCliente.stream()
+                    .filter((c) -> (c.getCodigo() == ped.getCliente().getCodigo()))
+                    .forEachOrdered((c) -> c.addPedido(ped));
     }
     public boolean removePedidoOfCliente(Pedido ped) {
         List<Cliente> listaCliente = getAll(Cliente.class);
@@ -39,15 +35,10 @@ public class ClienteService extends BaseService <Cliente> {
         }
         return false;
     }
-    
+    //Verifica se um cliente ja está cadastrado comparando os códigos.
     public boolean checkClientes(Cliente cod){
         List<Cliente> listaCliente = getAll(Cliente.class);
-        for (Cliente c : listaCliente){
-            if(c.getCodigo() == cod.getCodigo()){
-                return true;
-            }
-        }
-        return false;
+        return listaCliente.stream().anyMatch((c) -> (c.getCodigo() == cod.getCodigo()));
     }
     
 }

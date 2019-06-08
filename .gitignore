@@ -1,4 +1,21 @@
-/ProjForn/build/
-/ProjForn/dist/
-/ProjForn/nbproject/private/private.properties
-/ProjForn/nbproject/private/private.xml
+##########################
+## Java
+##########################
+*.class
+.mtj.tmp/
+*.jar
+*.war
+*.ear
+hs_err_pid*
+
+
+##########################
+## NetBeans
+##########################
+ProjForn/nbproject/private/
+ProjForn/build/
+ProjForn/nbbuild/
+ProjForn/dist/
+ProjForn/nbdist/
+ProjForn/nbactions.xml
+ProjForn/nb-configuration.xml

@@ -1,5 +1,6 @@
 package service;
 
+import DAO.ProdutoDAO;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,40 +9,35 @@ import modelo.Produto;
 import modelo.ProdutoExportacao;
 import modelo.ProdutoMercadoInterno;
 
-public class ProdutoService {
-    private static List<Produto> listaProduto = new ArrayList<Produto>();
+public class ProdutoService extends BaseService <Produto>{
     
-    public void salvarProduto(Produto c){
-        
-        listaProduto.add(c);
-        
+    public ProdutoService(){
+        dao = new ProdutoDAO();
     }
     
-    public List getProdutos(int tipo){
-        if (tipo == 1) {
+    //Retorna a lista de produtos do tipo t (1-Exportação; 2-MercadoInterno).
+    public List getProdutos(int t){
+        List<Produto> listaProduto = getAll(Produto.class);
+        if (t == 1) {
             List<ProdutoExportacao> listaux = new ArrayList();
-            for (Produto p : listaProduto) {
-                if(p instanceof ProdutoExportacao) {
-                    listaux.add((ProdutoExportacao) p);
-                }
-            }
+            listaProduto.stream()
+                        .filter((p) -> (p instanceof ProdutoExportacao))
+                        .forEachOrdered((p) -> {
+                listaux.add((ProdutoExportacao) p);
+            });
             return listaux;
-        } else if (tipo == 2) {
+        } else if (t == 2) {
             ArrayList<ProdutoMercadoInterno> listaux = new ArrayList();
-            for (Produto p : listaProduto) {
-                if(p instanceof ProdutoMercadoInterno) {
-                    listaux.add((ProdutoMercadoInterno) p);
-                }
-            }
+            listaProduto.stream()
+                        .filter((p) -> (p instanceof ProdutoMercadoInterno))
+                        .forEachOrdered((p) -> listaux.add((ProdutoMercadoInterno) p));
             return listaux;
         }
         return listaProduto;
     }
     
-    public void removerProduto(Produto c){
-        listaProduto.remove(c);
-    }
     public Produto getProdutoByNome(String str) {
+        List<Produto> listaProduto = getAll(Produto.class);
         for (Produto c : listaProduto) {
             if(c.getNome().equals(str)) {
                 return c;
@@ -49,15 +45,10 @@ public class ProdutoService {
         }
         return null;
     }
-    
+    //Verifica se existe algum produto cadastrado com a categoria c.
     public boolean checkCategoria(Categoria c){
-        for(Produto p : listaProduto){
-            if(c.equals(p.getCategoria()))
-                return false;
-        }
-        return true;
-        
+        List<Produto> listaProduto = getAll(Produto.class);
+        return !listaProduto.stream()
+                            .noneMatch((p) -> (c.equals(p.getCategoria())));
     }
-    
- 
 }

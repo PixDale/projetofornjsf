@@ -1,26 +1,18 @@
 package service;
 
-import java.io.Serializable;
-import java.util.ArrayList;
+import DAO.ClienteDAO;
 import java.util.List;
 import modelo.Cliente;
 import modelo.Pedido;
 
-public class ClienteService {
-    private static List<Cliente> listaCliente = new ArrayList<Cliente>();
+public class ClienteService extends BaseService <Cliente> { 
     
-    public void salvarCliente(Cliente c){
-        listaCliente.add(c);
+    public ClienteService(){
+        dao = new ClienteDAO();
     }
     
-    public List<Cliente> getClientes(){
-        return listaCliente;
-    }
-
-    public void removerCliente(Cliente c){
-        listaCliente.remove(c);
-    }
     public Cliente getClienteByNome(String str) {
+        List<Cliente> listaCliente = getAll(Cliente.class);
         for (Cliente c : listaCliente) {
             if(c.getNome().equals(str)) {
                 return c;
@@ -29,13 +21,13 @@ public class ClienteService {
         return null;
     }
     public void addPedidoToCliente(Pedido ped) {
-        for (Cliente c : listaCliente) {
-            if (c.getCodigo() == ped.getCliente().getCodigo()) {
-                c.addPedido(ped);
-            }
-        }
+        List<Cliente> listaCliente = getAll(Cliente.class);
+        listaCliente.stream()
+                    .filter((c) -> (c.getCodigo() == ped.getCliente().getCodigo()))
+                    .forEachOrdered((c) -> c.addPedido(ped));
     }
     public boolean removePedidoOfCliente(Pedido ped) {
+        List<Cliente> listaCliente = getAll(Cliente.class);
         for (Cliente c : listaCliente) {
             if (c.getCodigo() == ped.getCliente().getCodigo()) {
                 return c.removePedido(ped);
@@ -43,14 +35,10 @@ public class ClienteService {
         }
         return false;
     }
-    
+    //Verifica se um cliente ja está cadastrado comparando os códigos.
     public boolean checkClientes(Cliente cod){
-        for (Cliente c : listaCliente){
-            if(c.getCodigo() == cod.getCodigo()){
-                return true;
-            }
-        }
-        return false;
+        List<Cliente> listaCliente = getAll(Cliente.class);
+        return listaCliente.stream().anyMatch((c) -> (c.getCodigo() == cod.getCodigo()));
     }
     
 }

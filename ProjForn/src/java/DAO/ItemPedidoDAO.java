@@ -3,12 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package managedbean;
+package DAO;
+
+import modelo.ItemPedido;
 
 /**
  *
  * @author felipe
  */
-public class BaseManagedBean {
+public class ItemPedidoDAO extends BaseDAO <ItemPedido, Integer> {
     
 }

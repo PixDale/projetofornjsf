@@ -21,6 +21,7 @@
             Pedidos
         -->
         <h:form id="formCliente">
+            <p:growl id="msgs" showDetail="true" life="2000" autoUpdate="true"/>
             <p:panelGrid columns="6">
                 <p:outputLabel value="Nome" />
                 <p:inputText value="#{clienteMB.cliente.nome}"/>
@@ -46,10 +47,8 @@
                          paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                          rowsPerPageTemplate="5,10,15"
                          editable="true"
-                         selection="#{clienteMB.selectedCliente}"
-                         selectionMode="single"
                          rowKey="#{cli.codigo}">
-                
+                <p:ajax event="rowEdit" listener="#{clienteMB.onRowEdit}" update=":formCliente:msgs" />
                 <p:column headerText="Código">
                     <h:outputText value="#{cli.codigo}" />
                 </p:column>

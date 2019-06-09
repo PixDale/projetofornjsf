@@ -43,6 +43,7 @@ public class CategoriaMB {
 //        selectedCategoria = null;
 //    }
     public void setCategoria(Categoria categoria) {
+
         this.categoria = categoria;
     }
 

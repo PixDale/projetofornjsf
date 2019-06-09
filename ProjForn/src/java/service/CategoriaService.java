@@ -8,7 +8,7 @@ public class CategoriaService extends BaseService<Categoria> {
     }
     public Categoria getCategoriaByNome(String value) {
         List<Categoria> listaCat = getAll(Categoria.class);
-        for (Categoria e : listaCat) {
+        for (Categoria e : listaCat) { 
             if (e.getDescricao().equals(value)) {
                 return e;
             }

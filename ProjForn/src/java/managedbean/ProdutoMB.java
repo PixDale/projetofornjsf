@@ -3,6 +3,7 @@ package managedbean;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -28,8 +29,15 @@ public class ProdutoMB {
     private Categoria categoriaEscolhida;
     private final CategoriaService categoriaService = new CategoriaService();
     private final PedidoService pedidoService = new PedidoService();
-    private static int codigogeral = 0;
+    private List<ProdutoExportacao> listaEx;
+    private List<ProdutoMercadoInterno> listaMi;
+    
 
+    @PostConstruct
+    public void init() {
+        listaEx = servico.getProdutos(1);
+        listaMi = servico.getProdutos(2);// Call the DB here.
+    }
     public Categoria getCategoriaEscolhida() {
         return categoriaEscolhida;
     }
@@ -42,45 +50,38 @@ public class ProdutoMB {
       return categoriaService.getAll(Categoria.class);
     }
     
-    private void removeSelectedProduto(){
-        servico.remover(selectedProduto);
-    }
-    
-    public void gerarProduto(){
-        System.out.println("Entrou");
-        produtoex.setCodigo(2);
-        produtoex.setNome("kk");
-        produtoex.setDestino("rua");
-        servico.salvar(produtoex);
-        System.out.println("Saiu");
-    }
-    
     public void salvarProduto(){
+        try{
         if(produtoex.getDestino()==null){
-            produtomi.setCodigo(++codigogeral);
+            System.out.println(categoriaEscolhida.getDescricao());
             produtomi.setCategoria(categoriaEscolhida);
             servico.salvar(produtomi);
             produtomi = new ProdutoMercadoInterno();
         } else {
-            produtoex.setCodigo(++codigogeral);
+            System.out.println(categoriaEscolhida.getDescricao());
             produtoex.setCategoria(categoriaEscolhida);
             servico.salvar(produtoex);
             produtoex = new ProdutoExportacao();
         }
-        System.out.println("alo");
+            GrowlMB.success("Produto salvo com sucesso");
+        }catch(Exception e){
+            GrowlMB.error("Não foi possivel salvar o produto");
+        }
+        finally{
+            init();
+        }
     }
      
     public void removerProduto(Produto produto){
-        if(pedidoService.checkProduto(produto))
+        if(pedidoService.checkProduto(produto)){
             servico.remover(produto);
-    }
-
-    public Produto getSelectedProduto() {
-        return selectedProduto;
-    }
-
-    public void setSelectedProduto(Produto selectedProduto) {
-        this.selectedProduto = selectedProduto;
+            GrowlMB.success("Produto removido com sucesso");
+        }
+        else{
+            GrowlMB.error("Não foi possível remover o produto, verifique se não está associado a nenhum pedido");
+        }
+        init();
+        
     }
 
     public ProdutoExportacao getProdutoex() {
@@ -98,16 +99,29 @@ public class ProdutoMB {
     public void setProdutomi(ProdutoMercadoInterno produtomi) {
         this.produtomi = produtomi;
     }
-    public List<Produto> getProdutos(int tipo){
-        return servico.getProdutos(tipo);
+    public List<ProdutoExportacao> getProdutosEx(){
+            return listaEx;
+    }
+    public List<ProdutoMercadoInterno> getProdutosMi(){
+            return listaMi;
     }
     
+
     public void onRowEdit(RowEditEvent event) {
-       FacesMessage msg = new 
-        FacesMessage("Produto Editado",
-                ((Produto) event.getObject()).getNome());
-       FacesContext.getCurrentInstance().
-               addMessage(null, msg);
+        try {
+            Produto c = (Produto) event.getObject();
+            if (!c.getNome().equals("")) {
+                c.setNome(c.getNome().toUpperCase());
+                servico.salvar(c);
+                init();
+                GrowlMB.success("Produto alterado com sucesso");
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            GrowlMB.error("Não foi possível alterar o produto");
+        } finally {
+            init();
+        }
     }
 
     

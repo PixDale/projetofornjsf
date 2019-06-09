@@ -1,21 +1,22 @@
 package managedbean;
 
-import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import modelo.Categoria;
 import modelo.Cliente;
 import modelo.ItemPedido;
 import modelo.Pedido;
 import modelo.Produto;
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.RowEditEvent;
 import org.primefaces.event.SelectEvent;
 import service.ClienteService;
 import service.PedidoService;
@@ -23,36 +24,23 @@ import service.ProdutoService;
 
 @ManagedBean
 @SessionScoped
-
 public class PedidoMB {
-    private Pedido pedido = new Pedido();
+
+    //Services
     private final PedidoService servicopedido = new PedidoService();
     private final ClienteService servicocliente = new ClienteService();
-    private Pedido selectedPedido;
-    private ItemPedido itempedido = new ItemPedido();
     private final ProdutoService servicoproduto = new ProdutoService();
-    private static int codigogeral = 0;
-    private int numPedidoIP;
+
     private List<Pedido> listaPed;
-    
+    private ItemPedido itempedido = new ItemPedido();
+    private Pedido pedido = new Pedido();
+    private int numPedidoIP;
+
     @PostConstruct
     public void init() {
-        listaPed = servicopedido.getAll(Pedido.class); // Call the DB here.
+        listaPed = servicopedido.getAll(Pedido.class); // Consulta o banco aqui.
     }
-    
-    public void setSelectedPedido(Pedido p){
-        selectedPedido = p;
-    }
-    
-    public Pedido getSelectedPedido(){
-        return selectedPedido;
-    }
-    
-    public void removeSelectedPedido(){
-        servicopedido.remover(selectedPedido);
-        selectedPedido = null;
-    }
-    
+
     public Pedido getPedido() {
         return pedido;
     }
@@ -60,73 +48,81 @@ public class PedidoMB {
     public void setPedido(Pedido pedido) {
         this.pedido = pedido;
     }
-    
+
     public void onDateSelect(SelectEvent event) {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        
     }
-    
-      public List<Cliente> completeCliente(String query) {
+
+    //GrowlMB.success("Categoria removida com sucesso");
+    public List<Cliente> autocompleteCliente(String query) {
         List<Cliente> allClientes = servicocliente.dao.getAll(Cliente.class);
-        List<Cliente> filteredClientes = new ArrayList<Cliente>();
-         
-        for (int i = 0; i < allClientes.size(); i++) {
-            Cliente skin = allClientes.get(i);
-            if(skin.getNome().toLowerCase().contains(query)) {
-                filteredClientes.add(skin);
+        return allClientes
+                .stream()
+                .filter((p) -> p.getNome()
+                .toUpperCase()
+                .contains(query.toUpperCase()))
+                .collect(Collectors.toList());
+    }
+
+    public void salvarPedido() {
+        try {
+            if (servicocliente.checkClientes(pedido.getCliente())) {
+                servicopedido.salvar(pedido);
+                servicocliente.addPedidoToCliente(pedido);
+                pedido = new Pedido();
+                GrowlMB.success("Pedido salvo com sucesso");
             }
-        }
-         
-        return filteredClientes;
-    }
-    
-    public void salvarPedido(){
-        try{
-        if(servicocliente.checkClientes(pedido.getCliente())){
-            pedido.setNumero(++codigogeral);
-            servicopedido.salvar(pedido);
-            servicocliente.addPedidoToCliente(pedido);
-            pedido = new Pedido();
-        }
-        
-        }
-        catch(NullPointerException e){
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,"Error! Cliente necessario", null);
-            FacesContext.getCurrentInstance().addMessage(null, message);
+        } catch (NullPointerException e) {
+            GrowlMB.error("Não foi possível salvar o pedido");
+            System.out.println(e.getMessage());
+        } finally {
+            init();
         }
     }
-    
-    public void removerPedido(Pedido pedido){
-        if(servicopedido.remover(pedido)==1)
-            if(servicocliente.removePedidoOfCliente(pedido))
-                return;
-        //TODO Exibir algum erro
+
+    public void removerPedido(Pedido pedido) {
+        try {
+            if (servicopedido.remover(pedido) == 1) {
+                if (servicocliente.removePedidoOfCliente(pedido)) {
+                    GrowlMB.success("Pedido removido com sucesso");
+                }
+            }
+        } catch (Exception e) {
+            GrowlMB.error("Não foi possivel remover o pedido");
+            System.out.println(e.getMessage());
+        } finally {
+            init();
+        }
+
     }
-    
-    public List<Pedido> getPedidos(){
+
+    public List<Pedido> getPedidos() {
         return listaPed;
     }
+
     public Pedido getPedidoByNum(int num) {
-        List<Pedido> peds = getPedidos();
-        for (Pedido pe : peds) {
-            if(pe.getNumero() == num) {
+        init();
+        for (Pedido pe : listaPed) {
+            if (pe.getNumero() == num) {
                 return pe;
             }
         }
         return null;
     }
 
-    public void inserirProduto(){
-        if(itempedido.getQuantidade()>0){
+    public void inserirProduto() {
+        if (itempedido.getQuantidade() > 0) {
             pedido = getPedidoByNum(this.numPedidoIP);
-            if(pedido != null) {
+            if (pedido != null) {
                 itempedido.setPedido_IP(pedido);
-                if(!servicopedido.inserirProduto(itempedido)){
-                //mostrar mensagem de erro
+                if (!servicopedido.inserirProduto(itempedido)) {
+                    //mostrar mensagem de erro
                 }
             }
         }
+        System.out.println("----------------------RENOVOU CAMPOS");
+        numPedidoIP = 0;
         itempedido = new ItemPedido();
         pedido = new Pedido();
     }
@@ -138,66 +134,50 @@ public class PedidoMB {
     public void setItempedido(ItemPedido itempedido) {
         this.itempedido = itempedido;
     }
-    public void setItempedidoNumero(int numero) {
-        //itempedido.setPedido_IP();
-    }
-    public List<Produto> completeProduto(String query) {
-        List<Produto> allProdutos = servicoproduto.getProdutos(0);
-        List<Produto> filteredProdutos = new ArrayList<>();
 
-        for (int i = 0; i < allProdutos.size(); i++) {
-            Produto skin = allProdutos.get(i);
-            if(skin.getNome().toLowerCase().contains(query)) {
-                filteredProdutos.add(skin);
-            }
-        }
-        return filteredProdutos;
+    public List<Produto> autocompleteProduto(String query) {
+        List<Produto> allProdutos = servicoproduto.getAll(Produto.class);
+        return allProdutos
+                .stream()
+                .filter((p) -> p.getNome()
+                .toUpperCase()
+                .contains(query.toUpperCase()))
+                .collect(Collectors.toList());
     }
-    public List<ItemPedido> getItemPedidoByNumPedido (int num){
+
+    public List<ItemPedido> getItemPedidoByNumPedido(int num) {
         List<Pedido> listapedido = getPedidos();
         for (Pedido p : listapedido) {
             if (p.getNumero() == num) {
-                return p.getItensPedido();
+                return p.getItenspedido();
             }
         }
         return null;
     }
-    public List<Pedido> getPedidosByArrayNumPedido (List<Integer> num){
-        List<Pedido> listapedido = getPedidos();
-        List<Pedido> pedidosFiltrados = new ArrayList();
-        
-        for (Pedido p : listapedido) {
-            for (Integer i : num) {
-                if (i == p.getNumero()) {
-                    pedidosFiltrados.add(p);                    
-                }
+
+    public float getValorTotalItemPedido(ItemPedido ip) {
+        return (float) (ip.getQuantidade() * (ip.getProduto().getPreco() + ip.getProduto().getImposto()));
+    }
+
+    public float getImpostoTotal(ItemPedido ip) {
+        return (float) (ip.getQuantidade() * (ip.getProduto().getImposto()));
+    }
+
+    public float getValorTotal(Pedido ped) {
+        try {
+            float aux = 0;
+            List<ItemPedido> lista = ped.getItenspedido();
+            System.out.println("LISTA DO VALOR TOTAL-------------------------" + lista.toString());
+            for (ItemPedido p : lista) {
+                aux += getValorTotalItemPedido(p);
             }
+            System.out.println(aux);
+            return aux;
+        } catch (Exception e) {
+            System.out.println("----------------ERROR-LOG-----" + e);
+            return 0;
         }
-        return pedidosFiltrados;
-    }
-    public void viewProdutos() {
-        Map<String,Object> options = new HashMap<>();
-        options.put("modal", true);
-        Map<String, List<String>> params = new HashMap<>();
-        //params.put("selectedDepartments", Arrays.asList(selectedDeptsAsParam));
-        RequestContext.getCurrentInstance().openDialog("dfitens", options, null);
-    }
-    
-    public float valorTotalUnitario(ItemPedido ped){
-        return (float) (ped.getQuantidade()*(ped.getProduto().getPreco()+ped.getProduto().getImposto()));
-    }
-    
-    public float impostoTotal(ItemPedido ped){
-        return (float) (ped.getQuantidade()*(ped.getProduto().getImposto()));
-    }
-    
-    public float valorTotal(Pedido ped){
-        float aux=0;
-        for(ItemPedido p : ped.getItensPedido()){
-            aux += (p.getQuantidade()*(p.getProduto().getPreco()+p.getProduto().getImposto()));
-        }
-        System.out.println(aux);
-        return aux;
+
     }
 
     public int getNumPedidoIP() {
@@ -207,5 +187,21 @@ public class PedidoMB {
     public void setNumPedidoIP(int numPedidoIP) {
         this.numPedidoIP = numPedidoIP;
     }
-    
+
+    public void onRowEdit(RowEditEvent event) {
+        try {
+            Pedido p = (Pedido) event.getObject();
+            System.out.println("ID= " + p.getNumero());
+            if (!(p.getNumero() == 0)) {
+                servicopedido.salvar(p);
+                init();
+                GrowlMB.success("Pedido alterado com sucesso.");
+            }
+        } catch (Exception e) {
+            GrowlMB.error("Erro ao alterar o pedido.");
+            System.out.println(e.getMessage());
+        } finally {
+            init();
+        }
+    }
 }

@@ -32,16 +32,6 @@ public class CategoriaMB {
         return categoria;
     }
 
-//    public Categoria getSelectedCategoria() {
-//        return selectedCategoria;
-//    }
-//    public void setSelectedCategoria(Categoria selected) {
-//        selectedCategoria = selected;
-//    }
-//    public void removeSelectedCategoria() {
-//        servico.removerCategoria(selectedCategoria);
-//        selectedCategoria = null;
-//    }
     public void setCategoria(Categoria categoria) {
 
         this.categoria = categoria;
@@ -57,12 +47,15 @@ public class CategoriaMB {
     }
 
     public void removerCategoria(Categoria categoria) {
-        if (servico.remover(categoria) == 0) {
-            GrowlMB.success("Categoria removida com sucesso");
-            init();
-        } else {
-            GrowlMB.error("Não foi possível remover essa categoria, verifique se não há produtos associados.");
+        if (servicoproduto.checkCategoria(categoria)) {
+            if (servico.remover(categoria) == 0) {
+                GrowlMB.success("Categoria removida com sucesso");
+                init();
+            } else {
+                GrowlMB.error("Não foi possível remover essa categoria, verifique se não há produtos associados.");
+            }
         }
+
     }
 
     public void onRowEdit(RowEditEvent event) {

@@ -3,11 +3,11 @@ package modelo;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,25 +25,31 @@ public class Pedido implements Serializable{
     private int numero;
    
     @Temporal(TemporalType.DATE)
-    private Date data = new Date();
+    private Date data;
     
     @OneToMany(mappedBy="pedido")
-    private List<ItemPedido> itenspedido = new ArrayList<ItemPedido>();
+    private List<ItemPedido> itenspedido;
     
     private Cliente cliente;
 
     public Pedido(int numero, Cliente cliente, Date data) {
+        this.data = new Date();
+        this.itenspedido = new ArrayList();
         this.data = data;
         this.numero = numero;
         this.cliente = cliente;
     }
 
     public Pedido(Cliente cliente, Date data) {
+        this.data = new Date();
+        this.itenspedido = new ArrayList();
         this.data = data;
         this.cliente = cliente;
     }
    
      public Pedido() {
+        this.data = new Date();
+        this.itenspedido = new ArrayList();
     }
     
     public int getNumero() {
@@ -67,11 +73,11 @@ public class Pedido implements Serializable{
     public void setData(Date data) {
         this.data = data;
     }
-
-    public List<ItemPedido> getItensPedido() {
+    //OneToMany(mappedBy = "pedido", cascade = CascadeType.REFRESH)
+    public List<ItemPedido> getItenspedido() {
         return itenspedido;
     }
-    
+
     public void addItens(ItemPedido item) {
         itenspedido.add(item);
         

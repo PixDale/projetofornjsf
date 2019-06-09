@@ -1,5 +1,4 @@
 package managedbean;
-import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -18,12 +17,9 @@ public class ClienteMB {
 
     @PostConstruct
     public void init() {
-        listaCli = servico.getAll(Cliente.class); // Call the DB here.
+        listaCli = servico.getAll(Cliente.class);
     }
 
-   
-    
-    
     public Cliente getCliente() {
         return cliente;
     }
@@ -34,6 +30,8 @@ public class ClienteMB {
     
     
     public void salvarCliente(){
+        cliente.setNome(cliente.getNome().toUpperCase());
+        cliente.setEndereco(cliente.getEndereco().toUpperCase());
         servico.salvar(cliente);
         cliente = new Cliente();
         init();
@@ -49,6 +47,7 @@ public class ClienteMB {
     public List<Cliente> getClientes(){
         return listaCli;
     }
+    
     public void onRowEdit(RowEditEvent event) {
         try {
             Cliente c = (Cliente) event.getObject();

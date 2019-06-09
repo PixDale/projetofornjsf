@@ -73,7 +73,7 @@ public class ProdutoMB {
     }
      
     public void removerProduto(Produto produto){
-        if(pedidoService.checkProduto(produto)){
+        if (pedidoService.checkProduto(produto)){
             servico.remover(produto);
             GrowlMB.success("Produto removido com sucesso");
         }

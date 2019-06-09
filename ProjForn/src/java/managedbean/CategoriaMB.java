@@ -7,6 +7,7 @@ import javax.faces.bean.SessionScoped;
 import modelo.Categoria;
 import org.primefaces.event.RowEditEvent;
 import service.CategoriaService;
+import service.ProdutoService;
 
 @ManagedBean
 @SessionScoped
@@ -16,6 +17,7 @@ public class CategoriaMB {
     private List<Categoria> listaCat;
 
     private final CategoriaService servico = new CategoriaService();
+    private final ProdutoService servicoproduto = new ProdutoService();
 
     @PostConstruct
     public void init() {
@@ -45,12 +47,15 @@ public class CategoriaMB {
     }
 
     public void removerCategoria(Categoria categoria) {
-        if (servico.remover(categoria) == 0) {
-            GrowlMB.success("Categoria removida com sucesso");
-            init();
-        } else {
-            GrowlMB.error("Não foi possível remover essa categoria, verifique se não há produtos associados.");
+        if (servicoproduto.checkCategoria(categoria)) {
+            if (servico.remover(categoria) == 0) {
+                GrowlMB.success("Categoria removida com sucesso");
+                init();
+            } else {
+                GrowlMB.error("Não foi possível remover essa categoria, verifique se não há produtos associados.");
+            }
         }
+
     }
 
     public void onRowEdit(RowEditEvent event) {

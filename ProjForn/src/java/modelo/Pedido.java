@@ -73,7 +73,7 @@ public class Pedido implements Serializable{
     public void setData(Date data) {
         this.data = data;
     }
-    @OneToMany(mappedBy = "pedido", cascade = CascadeType.REFRESH)
+    //OneToMany(mappedBy = "pedido", cascade = CascadeType.REFRESH)
     public List<ItemPedido> getItenspedido() {
         return itenspedido;
     }

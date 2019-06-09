@@ -18,7 +18,7 @@
             Itens
             Cliente
         -->
-        <h:form id="formCliente">
+        <h:form id="formPedido">
             <p:growl id="msgs" showDetail="true" life="2000" autoUpdate="true"/>
             <h3>Abertura de Pedido</h3>
             <p:panelGrid columns="4">
@@ -37,7 +37,7 @@
                                 converter="converterCliente"/>
                                 
             </p:panelGrid>
-            <p:commandButton value="Salvar" action="#{pedidoMB.salvarPedido()}" update=":formCliente" />
+            <p:commandButton value="Salvar" action="#{pedidoMB.salvarPedido()}" update=":formPedido" />
             <br/>
             <h3>Inserção de Produtos</h3>
             <p:panelGrid columns="6">
@@ -57,7 +57,7 @@
                                 
             </p:panelGrid>
 
-            <p:commandButton value="Inserir" action="#{pedidoMB.inserirProduto()}" update=":formCliente" />
+            <p:commandButton value="Inserir" action="#{pedidoMB.inserirProduto()}" update=":formPedido" />
             <br /><br />
             
 
@@ -69,23 +69,25 @@
                          rowsPerPageTemplate="5,10,15"
                          editable="true"
                          rowKey="#{comp.numero}">
-                <p:ajax event="rowEdit" listener="#{pedidoMB.onRowEdit}" update=":formCliente:msgs" />
+                
+                <p:ajax event="rowEdit" listener="#{pedidoMB.onRowEdit}" update=":formPedido:msgs" />
+                
                 <p:column headerText="Número">
-                    <h:outputText value="#{comp.numero}" />
+                    <h:outputText value="#{ped.numero}" />
                 </p:column>
                 <p:column headerText="Data">
-                    <h:outputText value="#{comp.data}" />
+                    <h:outputText value="#{ped.data}" />
                 </p:column>
                 <p:column headerText="Itens">
                     <p:rowToggler />
                 </p:column>
                 <p:column headerText="Cliente">
-                    <h:outputText value="#{comp.cliente.nome}" />
+                    <h:outputText value="#{ped.cliente.nome}" />
                 </p:column>
                 
                 <p:rowExpansion>
                     <div align="center">
-                        <p:dataTable var="prod" value="#{pedidoMB.getItemPedidoByNumPedido(comp.numero)}" style="width:60%">
+                        <p:dataTable var="prod" value="#{pedidoMB.getItemPedidoByNumPedido(ped.numero)}" style="width:60%">
                         <p:column headerText="Produto">
                             <h:outputText value="#{prod.produto.nome}" />
                         </p:column>
@@ -108,11 +110,11 @@
                     </div>
                 </p:rowExpansion>
                 <p:column headerText="Total Pedido">
-                    <h:outputText value="#{pedidoMB.getValorTotal(comp)}" />                    
+                    <h:outputText value="#{pedidoMB.getValorTotal(ped)}" />                    
                 </p:column>
                 <p:column style="width:32px">
                     <p:commandLink styleClass="ui-icon ui-icon-trash" 
-                                   actionListener="#{pedidoMB.removerPedido(comp)}"
+                                   actionListener="#{pedidoMB.removerPedido(ped)}"
                                    update="dataPedidos"
                                    />
                 </p:column>

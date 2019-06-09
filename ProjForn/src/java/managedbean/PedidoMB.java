@@ -24,7 +24,6 @@ import service.ProdutoService;
 
 @ManagedBean
 @SessionScoped
-
 public class PedidoMB {
 
     //Services
@@ -73,11 +72,12 @@ public class PedidoMB {
                 servicocliente.addPedidoToCliente(pedido);
                 pedido = new Pedido();
                 GrowlMB.success("Pedido salvo com sucesso");
-                init();
             }
         } catch (NullPointerException e) {
             GrowlMB.error("Não foi possível salvar o pedido");
             System.out.println(e.getMessage());
+        } finally {
+            init();
         }
     }
 
@@ -86,12 +86,13 @@ public class PedidoMB {
             if (servicopedido.remover(pedido) == 1) {
                 if (servicocliente.removePedidoOfCliente(pedido)) {
                     GrowlMB.success("Pedido removido com sucesso");
-                    init();
                 }
             }
         } catch (Exception e) {
             GrowlMB.error("Não foi possivel remover o pedido");
             System.out.println(e.getMessage());
+        } finally {
+            init();
         }
 
     }
@@ -101,6 +102,7 @@ public class PedidoMB {
     }
 
     public Pedido getPedidoByNum(int num) {
+        init();
         for (Pedido pe : listaPed) {
             if (pe.getNumero() == num) {
                 return pe;
@@ -119,6 +121,8 @@ public class PedidoMB {
                 }
             }
         }
+        System.out.println("----------------------RENOVOU CAMPOS");
+        numPedidoIP = 0;
         itempedido = new ItemPedido();
         pedido = new Pedido();
     }
@@ -163,7 +167,7 @@ public class PedidoMB {
         try {
             float aux = 0;
             List<ItemPedido> lista = ped.getItenspedido();
-            System.out.println("LISTA DO VALOR TOTAL-------------------------"+lista.toString());
+            System.out.println("LISTA DO VALOR TOTAL-------------------------" + lista.toString());
             for (ItemPedido p : lista) {
                 aux += getValorTotalItemPedido(p);
             }

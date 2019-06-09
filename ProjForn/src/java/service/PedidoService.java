@@ -34,7 +34,9 @@ public class PedidoService extends BaseService <Pedido>{
     //Verifica se o produto existe na lista de pedidos
     public boolean checkProduto(Produto produto){
         List<Pedido> listaPedido = getAll(Pedido.class);
-        return listaPedido.stream().noneMatch((p) -> (!p.getItensPedido().stream().noneMatch((i) -> (produto.equals(i.getProduto())))));
+        return listaPedido.stream()
+                          .noneMatch((p) -> (!p.getItenspedido().stream()
+                                  .noneMatch((i) -> (produto.equals(i.getProduto())))));
     }
     
     

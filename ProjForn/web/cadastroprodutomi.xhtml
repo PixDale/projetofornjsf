@@ -21,6 +21,7 @@
             Imposto
         -->
         <h:form id="formProdmi">
+            <p:growl id="msgs" showDetail="true" life="2000" autoUpdate="true"/>
 
             <p:panelGrid columns="6">
                 <p:outputLabel value="Nome" />
@@ -45,17 +46,16 @@
             <p:commandButton value="Salvar" action="#{produtoMB.salvarProduto()}" update=":formProdmi" />
             <br /><br />
 
-            <p:dataTable var="comp" value="#{produtoMB.getProdutos(2)}"
+            <p:dataTable var="comp" value="#{produtoMB.getProdutosMi()}"
                          id = "dataProdutosmi"
                          rows="10"
                          paginator="true"
                          paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                          rowsPerPageTemplate="5,10,15"
                          editable="true"
-                         selection="#{produtoMB.selectedProduto}"
-                         selectionMode="single"
                          rowKey="#{comp.codigo}"
                          resizableColumns="true">
+                <p:ajax event="rowEdit" listener="#{produtoaMB.onRowEdit}" update=":formProdmi:msgs" />
                 
                 <p:column headerText="Código" filterBy="#{comp.codigo}" 
                           filterMatchMode="contains">

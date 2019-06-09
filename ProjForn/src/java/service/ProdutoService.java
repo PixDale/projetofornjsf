@@ -46,6 +46,7 @@ public class ProdutoService extends BaseService <Produto>{
         return null;
     }
     //Verifica se existe algum produto cadastrado com a categoria c.
+    //Retorna true se houver algum produto cadastrado.
     public boolean checkCategoria(Categoria c){
         List<Produto> listaProduto = getAll(Produto.class);
         return !listaProduto.stream()

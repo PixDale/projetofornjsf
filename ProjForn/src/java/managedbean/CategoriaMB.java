@@ -7,7 +7,6 @@ import javax.faces.bean.SessionScoped;
 import modelo.Categoria;
 import org.primefaces.event.RowEditEvent;
 import service.CategoriaService;
-import service.ProdutoService;
 
 @ManagedBean
 @SessionScoped
@@ -17,7 +16,6 @@ public class CategoriaMB {
     private List<Categoria> listaCat;
 
     private final CategoriaService servico = new CategoriaService();
-    private final ProdutoService servicoproduto = new ProdutoService();
 
     @PostConstruct
     public void init() {
@@ -32,16 +30,6 @@ public class CategoriaMB {
         return categoria;
     }
 
-//    public Categoria getSelectedCategoria() {
-//        return selectedCategoria;
-//    }
-//    public void setSelectedCategoria(Categoria selected) {
-//        selectedCategoria = selected;
-//    }
-//    public void removeSelectedCategoria() {
-//        servico.removerCategoria(selectedCategoria);
-//        selectedCategoria = null;
-//    }
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
     }

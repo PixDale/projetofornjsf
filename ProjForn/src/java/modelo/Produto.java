@@ -81,6 +81,7 @@ public abstract class Produto implements Serializable {
     }
 
     public void setPreco(double preco) {
+        System.out.println("Entrou no set preço");
         this.preco = preco;
     }
 

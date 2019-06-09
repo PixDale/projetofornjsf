@@ -31,6 +31,7 @@ public class CategoriaMB {
     }
 
     public void setCategoria(Categoria categoria) {
+
         this.categoria = categoria;
     }
 

@@ -77,11 +77,10 @@ public abstract class Produto implements Serializable {
     }
 
     public double getPreco() {
-        return preco;
+        return this.preco*this.moeda;
     }
 
     public void setPreco(double preco) {
-        System.out.println("Entrou no set preço");
         this.preco = preco;
     }
 

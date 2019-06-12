@@ -156,7 +156,7 @@ public class PedidoMB {
     }
 
     public float getValorTotalItemPedido(ItemPedido ip) {
-        return (float) (ip.getQuantidade() * (ip.getProduto().getPreco() + ip.getProduto().getImposto()));
+        return (float) (ip.getQuantidade() * (ip.getProduto().getPreco() + ip.getProduto().getImposto()) * (ip.getProduto().getMoeda()));
     }
 
     public float getImpostoTotal(ItemPedido ip) {

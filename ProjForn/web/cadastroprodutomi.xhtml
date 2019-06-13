@@ -55,7 +55,7 @@
                          editable="true"
                          rowKey="#{comp.codigo}"
                          resizableColumns="true">
-                <p:ajax event="rowEdit" listener="#{produtoaMB.onRowEdit}" update=":formProdmi:msgs" />
+                <p:ajax event="rowEdit" listener="#{produtoMB.onRowEdit}" update=":formProdmi:msgs" />
                 
                 <p:column headerText="Código" filterBy="#{comp.codigo}" 
                           filterMatchMode="contains">
